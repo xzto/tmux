@@ -43,6 +43,8 @@ fi
 
 # Set up the compiler in two different ways and say yes we may want to install.
 AC_PROG_CC
+AC_PATH_PROG([PYTHON3], [python3])
+AS_IF([test -z "$PYTHON3"], [AC_MSG_ERROR([python3 is required to generate command help and man pages])])
 AM_PROG_CC_C_O
 m4_version_prereq(2.70, [AC_PROG_CC], [AC_PROG_CC_C99])
 AC_PROG_CPP

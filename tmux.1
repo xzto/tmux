@@ -1062,6 +1062,194 @@ $ tmux new\-window \e; split\-window \-d
 
 $ tmux new\-session \-d \[aq]vi \[ti]/.tmux.conf\[aq] \e; split\-window \-d \e; attach
 .Ed
+.Ss Command reference
+The following commands are described in individual manual pages:
+.Bl -tag -width "tmux-show-window-options" -compact
+.It Xr tmux-attach-session 1
+Attach to a session or switch the current client to it. Alias: attach.
+.It Xr tmux-bind-key 1
+Bind a key to a tmux command. Alias: bind.
+.It Xr tmux-break-pane 1
+Move a pane out of its window into a new window, or make it floating. Alias: breakp.
+.It Xr tmux-capture-pane 1
+Capture pane contents to a buffer or standard output. Alias: capturep.
+.It Xr tmux-choose-buffer 1
+Choose a paste buffer interactively from a list.
+.It Xr tmux-choose-client 1
+Choose an attached client interactively from a list.
+.It Xr tmux-choose-tree 1
+Choose a session, window, or pane interactively from a tree.
+.It Xr tmux-clear-history 1
+Remove and free the history for a pane. Alias: clearhist.
+.It Xr tmux-clear-prompt-history 1
+Clear status prompt history. Alias: clearphist.
+.It Xr tmux-clock-mode 1
+Display a large clock in the target pane.
+.It Xr tmux-command-prompt 1
+Open a prompt in a client to run a command interactively.
+.It Xr tmux-confirm-before 1
+Ask before running a command. Alias: confirm.
+.It Xr tmux-copy-mode 1
+Enter copy mode to view pane history and copy text.
+.It Xr tmux-customize-mode 1
+Browse and change options and key bindings in a pane.
+.It Xr tmux-delete-buffer 1
+Delete a paste buffer. Alias: deleteb.
+.It Xr tmux-detach-client 1
+Detach a client from its session. Alias: detach.
+.It Xr tmux-display-menu 1
+Display an interactive menu on a client. Alias: menu.
+.It Xr tmux-display-message 1
+Display a message in the status line or print it as command output. Alias: display.
+.It Xr tmux-display-panes 1
+Show pane indicators and allow a pane to be selected. Alias: displayp.
+.It Xr tmux-display-popup 1
+Run a command in a floating popup pane. Alias: popup.
+.It Xr tmux-find-window 1
+Search window names, pane titles, and visible pane content. Alias: findw.
+.It Xr tmux-has-session 1
+Report whether a session exists. Alias: has.
+.It Xr tmux-if-shell 1
+Run a tmux command according to a shell command's result. Alias: if.
+.It Xr tmux-join-pane 1
+Move a pane into another pane's window, splitting the destination pane. Alias: joinp.
+.It Xr tmux-kill-pane 1
+Destroy a pane. Alias: killp.
+.It Xr tmux-kill-server 1
+Kill the tmux server, its clients, and all its sessions.
+.It Xr tmux-kill-session 1
+Destroy a session, or clear its window alerts.
+.It Xr tmux-kill-window 1
+Destroy a window and remove it from all sessions. Alias: killw.
+.It Xr tmux-last-pane 1
+Select the previously active pane in a window. Alias: lastp.
+.It Xr tmux-last-window 1
+Select the previously selected window. Alias: last.
+.It Xr tmux-link-window 1
+Link a window into a session without removing its existing link. Alias: linkw.
+.It Xr tmux-list-buffers 1
+List the server's paste buffers. Alias: lsb.
+.It Xr tmux-list-clients 1
+List clients attached to the tmux server. Alias: lsc.
+.It Xr tmux-list-commands 1
+List the syntax of one or all tmux commands. Alias: lscm.
+.It Xr tmux-list-keys 1
+List key bindings. Alias: lsk.
+.It Xr tmux-list-panes 1
+List panes in a window, session, or across the server. Alias: lsp.
+.It Xr tmux-list-sessions 1
+List the sessions managed by the server. Alias: ls.
+.It Xr tmux-list-windows 1
+List windows in a session or across the server. Alias: lsw.
+.It Xr tmux-load-buffer 1
+Load a file into a paste buffer. Alias: loadb.
+.It Xr tmux-lock-client 1
+Lock a client by running its configured lock command. Alias: lockc.
+.It Xr tmux-lock-server 1
+Lock every client connected to the server. Alias: lock.
+.It Xr tmux-lock-session 1
+Lock all clients attached to a session. Alias: locks.
+.It Xr tmux-move-pane 1
+Move a pane into another window or reposition a floating pane. Alias: movep.
+.It Xr tmux-move-window 1
+Move a window to another index or session. Alias: movew.
+.It Xr tmux-new-pane 1
+Create a floating pane in the current window. Alias: newp.
+.It Xr tmux-new-session 1
+Create a new session and its initial window. Alias: new.
+.It Xr tmux-new-window 1
+Create a window in the current session. Alias: neww.
+.It Xr tmux-next-layout 1
+Move a window to the next layout and rearrange its panes to fit. Alias: nextl.
+.It Xr tmux-next-window 1
+Move to the next window in a session. Alias: next.
+.It Xr tmux-paste-buffer 1
+Insert a paste buffer into a pane. Alias: pasteb.
+.It Xr tmux-pipe-pane 1
+Pipe pane output to a shell command or send command output to a pane. Alias: pipep.
+.It Xr tmux-previous-layout 1
+Move the target window to the previous layout in the session. Alias: prevl.
+.It Xr tmux-previous-window 1
+Move to the previous window in a session. Alias: prev.
+.It Xr tmux-refresh-client 1
+Refresh a client or change its visible window area. Alias: refresh.
+.It Xr tmux-rename-session 1
+Rename a session. Alias: rename.
+.It Xr tmux-rename-window 1
+Rename the current window. Alias: renamew.
+.It Xr tmux-resize-pane 1
+Resize a pane by an adjustment or to an absolute size. Alias: resizep.
+.It Xr tmux-resize-window 1
+Increase or decrease a window's size. Alias: resizew.
+.It Xr tmux-respawn-pane 1
+Restart the command in an inactive pane. Alias: respawnp.
+.It Xr tmux-respawn-window 1
+Restart the command in an inactive window. Alias: respawnw.
+.It Xr tmux-rotate-window 1
+Rotate the pane positions within a window. Alias: rotatew.
+.It Xr tmux-run-shell 1
+Run a shell command or tmux command without creating a window. Alias: run.
+.It Xr tmux-save-buffer 1
+Save a paste buffer to a file. Alias: saveb.
+.It Xr tmux-select-layout 1
+Choose a layout for the target window. Alias: selectl.
+.It Xr tmux-select-pane 1
+Select a pane, change its input state, or mark it for pane commands. Alias: selectp.
+.It Xr tmux-select-window 1
+Select a window in the target session. Alias: selectw.
+.It Xr tmux-send-keys 1
+Send keys to a pane or client. Alias: send.
+.It Xr tmux-send-prefix 1
+Send the configured prefix key to a pane.
+.It Xr tmux-server-access 1
+Change or list server access and write permissions.
+.It Xr tmux-set-buffer 1
+Set or append the contents of a paste buffer, or rename a buffer. Alias: setb.
+.It Xr tmux-set-environment 1
+Set, unset, or mark an environment variable for removal. Alias: setenv.
+.It Xr tmux-set-hook 1
+Set, unset, or run a hook, monitor subscription, or user event.
+.It Xr tmux-set-option 1
+Set a server, session, window, or pane option. Alias: set.
+.It Xr tmux-set-window-option 1
+Set a window option. Alias: setw.
+.It Xr tmux-show-buffer 1
+Display the contents of a paste buffer. Alias: showb.
+.It Xr tmux-show-environment 1
+Display variables in a session or global environment. Alias: showenv.
+.It Xr tmux-show-hooks 1
+List hooks in a session, window, or pane scope.
+.It Xr tmux-show-messages 1
+Show the server message log or debugging information. Alias: showmsgs.
+.It Xr tmux-show-options 1
+Show session, server, window, or pane options. Alias: show.
+.It Xr tmux-show-prompt-history 1
+Display status prompt history. Alias: showphist.
+.It Xr tmux-show-window-options 1
+Show window options. Alias: showw.
+.It Xr tmux-source-file 1
+Execute commands from one or more configuration files. Alias: source.
+.It Xr tmux-split-window 1
+Split a pane and start a command in the new pane. Alias: splitw.
+.It Xr tmux-start-server 1
+Start the tmux server without creating a session. Alias: start.
+.It Xr tmux-suspend-client 1
+Suspend a client by sending SIGTSTP (tty stop). Alias: suspendc.
+.It Xr tmux-swap-pane 1
+Exchange two panes, optionally moving the active pane's neighbors. Alias: swapp.
+.It Xr tmux-swap-window 1
+Swap the positions of two windows. Alias: swapw.
+.It Xr tmux-switch-client 1
+Switch a client to another session, window, or pane. Alias: switchc.
+.It Xr tmux-switch-mode 1
+Choose a session or window from an interactive list.
+.It Xr tmux-unbind-key 1
+Remove a key binding or all bindings in a key table. Alias: unbind.
+.It Xr tmux-unlink-window 1
+Remove a window from the current session. Alias: unlinkw.
+.It Xr tmux-wait-for 1
+Wait on or signal a named channel or event. Alias: wait.
+.El
 .Sh CLIENTS AND SESSIONS
 The
 .Nm
@@ -1087,713 +1275,59 @@ section.
 The following commands are available to manage clients and sessions:
 .Bl -tag -width Ds
 .Tg attach
-.It Xo Ic attach\-session
-.Op Fl dErx
-.Op Fl c Ar working\-directory
-.Op Fl f Ar flags
-.Op Fl t Ar target\-session
-.Xc
-.D1 Pq alias: Ic attach
-If run from outside
-.Nm ,
-attach to
-.Ar target\-session
-in the current terminal.
-.Ar target\-session
-must already exist - to create a new session, see the
-.Ic new\-session
-command (with
-.Fl A
-to create or attach).
-If used from inside, switch the currently attached session to
-.Ar target\-session .
-If
-.Fl d
-is specified, any other clients attached to the session are detached.
-If
-.Fl x
-is given, send
-.Dv SIGHUP
-to the parent process of the client as well as
-detaching the client, typically causing it to exit.
-.Fl f
-sets a comma-separated list of client flags.
-The flags are:
-.Bl -tag -width Ds
-.It ignore\-size
-the client does not affect the size of other clients
-.It new\-layouts
-use the new layout string format
-.It no\-detach\-on\-destroy
-do not detach the client when the session it is attached to is destroyed if
-there are any other sessions
-.It no\-output
-the client does not receive pane output in control mode
-.It pause\-after=seconds
-output is paused once the pane is
-.Ar seconds
-behind in control mode
-.It read\-only
-the client is read-only
-.It wait\-exit
-wait for an empty line input before exiting in control mode
-.El
-.Pp
-A leading
-.Ql \&!
-turns a flag off if the client is already attached.
-.Fl r
-is an alias for
-.Fl f
-.Ar read\-only,ignore\-size .
-When a client is read-only, only keys bound to the
-.Ic detach\-client
-or
-.Ic switch\-client
-commands have any effect.
-.Pp
-If no server is started,
-.Ic attach\-session
-will attempt to start it; this will fail unless sessions are created in the
-configuration file.
-.Pp
-The
-.Ar target\-session
-rules for
-.Ic attach\-session
-are slightly adjusted: if
-.Nm
-needs to select the most recently used session, it will prefer the most
-recently used
-.Em unattached
-session.
-.Pp
-.Fl c
-will set the session working directory (used for new windows) to
-.Ar working\-directory .
-.Pp
-If
-.Fl E
-is used, the
-.Ic update\-environment
-option will not be applied.
 .Tg detach
-.It Xo Ic detach\-client
-.Op Fl aP
-.Op Fl E Ar shell\-command
-.Op Fl s Ar target\-session
-.Op Fl t Ar target\-client
-.Xc
-.D1 Pq alias: Ic detach
-Detach the current client if bound to a key, the client specified with
-.Fl t ,
-or all clients currently attached to the session specified by
-.Fl s .
-The
-.Fl a
-option kills all but the client given with
-.Fl t .
-If
-.Fl P
-is given, send
-.Dv SIGHUP
-to the parent process of the client, typically causing it
-to exit.
-With
-.Fl E ,
-run
-.Ar shell\-command
-to replace the client.
+.It Xr tmux-attach-session 1
+Attach to a session or switch the current client to it.
 .Tg has
-.It Ic has\-session Op Fl t Ar target\-session
-.D1 Pq alias: Ic has
-Report an error and exit with 1 if the specified session does not exist.
-If it does exist, exit with 0.
-.It Ic kill\-server
-Kill the
-.Nm
-server and clients and destroy all sessions.
-.It Xo Ic kill\-session
-.Op Fl aCg
-.Op Fl f Ar filter
-.Op Fl t Ar target\-session
-.Xc
-Destroy the given session, closing any windows linked to it and no other
-sessions, and detaching all clients attached to it.
-If
-.Fl a
-is given, all sessions but the specified one is killed.
-When
-.Fl a
-is given,
-.Fl f
-specifies a filter.
-Only sessions for which the filter is true are killed.
-If
-.Fl g
-is given and the session is in a session group, all sessions in the group are
-killed.
-The
-.Fl C
-flag clears alerts (bell, activity, or silence) in all windows linked to the
-session.
+.It Xr tmux-detach-client 1
+Detach a client from its session.
+.It Xr tmux-has-session 1
+Report whether a session exists.
+.It Xr tmux-kill-server 1
+Kill the tmux server, its clients, and all its sessions.
 .Tg lsc
-.It Xo Ic list\-clients
-.Op Fl r
-.Op Fl F Ar format
-.Op Fl f Ar filter
-.Op Fl O Ar sort\-order
-.Op Fl t Ar target\-session
-.Xc
-.D1 Pq alias: Ic lsc
-List all clients attached to the server.
-.Fl F
-specifies the format of each line and
-.Fl f
-a filter.
-Only clients for which the filter is true are shown.
-See the
-.Sx FORMATS
-section.
-.Fl O
-specifies the sort order: one of
-.Ql name ,
-.Ql size ,
-.Ql creation
-(time), or
-.Ql activity
-(time).
-.Fl r
-reverses the sort order.
-If
-.Ar target\-session
-is specified, list only clients connected to that session.
+.It Xr tmux-kill-session 1
+Destroy a session, or clear its window alerts.
 .Tg lscm
-.It Xo Ic list\-commands
-.Op Fl F Ar format
-.Op Ar command
-.Xc
-.D1 Pq alias: Ic lscm
-List the syntax of
-.Ar command
-or - if omitted - of all commands supported by
-.Nm .
+.It Xr tmux-list-clients 1
+List clients attached to the tmux server.
 .Tg ls
-.It Xo Ic list\-sessions
-.Op Fl r
-.Op Fl F Ar format
-.Op Fl f Ar filter
-.Op Fl O Ar sort\-order
-.Xc
-.D1 Pq alias: Ic ls
-List all sessions managed by the server.
-.Fl F
-specifies the format of each line and
-.Fl f
-a filter.
-Only sessions for which the filter is true are shown.
-See the
-.Sx FORMATS
-section.
-.Fl O
-specifies the sort order: one of
-.Ql index ,
-.Ql name ,
-.Ql creation
-(time), or
-.Ql activity
-(time).
-.Fl r
-reverses the sort order.
+.It Xr tmux-list-commands 1
+List the syntax of one or all tmux commands.
 .Tg lockc
-.It Ic lock\-client Op Fl t Ar target\-client
-.D1 Pq alias: Ic lockc
-Lock
-.Ar target\-client ,
-see the
-.Ic lock\-server
-command.
+.It Xr tmux-list-sessions 1
+List the sessions managed by the server.
 .Tg locks
-.It Ic lock\-session Op Fl t Ar target\-session
-.D1 Pq alias: Ic locks
-Lock all clients attached to
-.Ar target\-session .
+.It Xr tmux-lock-client 1
+Lock a client by running its configured lock command.
 .Tg new
-.It Xo Ic new\-session
-.Op Fl AdDEPX
-.Op Fl c Ar start\-directory
-.Op Fl e Ar environment
-.Op Fl f Ar flags
-.Op Fl F Ar format
-.Op Fl n Ar window\-name
-.Op Fl s Ar session\-name
-.Op Fl t Ar group\-name
-.Op Fl x Ar width
-.Op Fl y Ar height
-.Op Ar shell\-command Op Ar argument ...
-.Xc
-.D1 Pq alias: Ic new
-Create a new session with name
-.Ar session\-name .
-.Pp
-The new session is attached to the current terminal unless
-.Fl d
-is given.
-.Ar window\-name
-and
-.Ar shell\-command
-are the name of and shell command to execute in the initial window.
-With
-.Fl d ,
-the initial size comes from the global
-.Ic default\-size
-option;
-.Fl x
-and
-.Fl y
-can be used to specify a different size.
-.Ql \-
-uses the size of the current client if any.
-If
-.Fl x
-or
-.Fl y
-is given, the
-.Ic default\-size
-option is set for the session.
-.Fl f
-sets a comma-separated list of client flags (see
-.Ic attach\-session ) .
-.Pp
-If run from a terminal, any
-.Xr termios 4
-special characters are saved and used for new windows in the new session.
-.Pp
-The
-.Fl A
-flag makes
-.Ic new\-session
-behave like
-.Ic attach\-session
-if
-.Ar session\-name
-already exists;
-if
-.Fl A
-is given,
-.Fl D
-behaves like
-.Fl d
-to
-.Ic attach\-session ,
-and
-.Fl X
-behaves like
-.Fl x
-to
-.Ic attach\-session .
-.Pp
-If
-.Fl t
-is given, it specifies a
-.Ic session group .
-Sessions in the same group share the same set of windows - new windows are
-linked to all sessions in the group and any windows closed removed from all
-sessions.
-The current and previous window and any session options remain independent and
-any session in a group may be killed without affecting the others.
-The
-.Ar group\-name
-argument may be:
-.Bl -enum -width Ds
-.It
-the name of an existing group, in which case the new session is added to that
-group;
-.It
-the name of an existing session - the new session is added to the same group
-as that session, creating a new group if necessary;
-.It
-the name for a new group containing only the new session.
-.El
-.Pp
-.Fl n
-and
-.Ar shell\-command
-are invalid if
-.Fl t
-is used.
-.Pp
-The
-.Fl P
-option prints information about the new session after it has been created.
-By default, it uses the format
-.Ql #{session_name}:\&
-but a different format may be specified with
-.Fl F .
-.Pp
-If
-.Fl E
-is used, the
-.Ic update\-environment
-option will not be applied.
-.Fl e
-takes the form
-.Ql VARIABLE=value
-and sets an environment variable for the newly created session; it may be
-specified multiple times.
+.It Xr tmux-lock-session 1
+Lock all clients attached to a session.
 .Tg refresh
-.It Xo Ic refresh\-client
-.Op Fl cDlLRSU
-.Op Fl A Ar pane:state
-.Op Fl B Ar name:what:format
-.Op Fl C Ar size
-.Op Fl f Ar flags
-.Op Fl r Ar pane:report
-.Op Fl t Ar target\-client
-.Op Ar adjustment
-.Xc
-.D1 Pq alias: Ic refresh
-Refresh the current client if bound to a key, or a single client if one is given
-with
-.Fl t .
-If
-.Fl S
-is specified, only update the client's status line.
-.Pp
-The
-.Fl U ,
-.Fl D ,
-.Fl L
-.Fl R ,
-and
-.Fl c
-flags allow the visible portion of a window which is larger than the client
-to be changed.
-.Fl U
-moves the visible part up by
-.Ar adjustment
-rows and
-.Fl D
-down,
-.Fl L
-left by
-.Ar adjustment
-columns and
-.Fl R
-right.
-.Fl c
-returns to tracking the cursor automatically.
-If
-.Ar adjustment
-is omitted, 1 is used.
-Note that the visible position is a property of the client not of the
-window, changing the current window in the attached session will reset
-it.
-.Pp
-.Fl C
-sets the width and height of a control mode client or of a window for a
-control mode client,
-.Ar size
-must be one of
-.Ql widthxheight
-or
-.Ql window ID:widthxheight ,
-for example
-.Ql 80x24
-or
-.Ql @0:80x24 .
-.Fl A
-allows a control mode client to trigger actions on a pane.
-The argument is a pane ID (with leading
-.Ql % ) ,
-a colon, then one of
-.Ql on ,
-.Ql off ,
-.Ql continue
-or
-.Ql pause .
-If
-.Ql off ,
-.Nm
-will not send output from the pane to the client and if all clients have turned
-the pane off, will stop reading from the pane.
-If
-.Ql continue ,
-.Nm
-will return to sending output to the pane if it was paused (manually or with the
-.Ar pause\-after
-flag).
-If
-.Ql pause ,
-.Nm
-will pause the pane.
-.Fl A
-may be given multiple times for different panes.
-.Pp
-.Fl B
-sets a subscription to a format for a control mode client.
-The argument is split into three items by colons:
-.Ar name
-is a name for the subscription;
-.Ar what
-is a type of item to subscribe to;
-.Ar format
-is the format.
-After a subscription is added, changes to the format are reported with the
-.Ic %subscription\-changed
-notification, at most once a second.
-If only the name is given, the subscription is removed.
-.Ar what
-may be empty to check the format only for the attached session, or one of:
-a pane ID such as
-.Ql %0 ;
-.Ql %*
-for all panes in the attached session;
-a window ID such as
-.Ql @0 ;
-or
-.Ql @*
-for all windows in the attached session.
-.Pp
-.Fl f
-sets a comma-separated list of client flags, see
-.Ic attach\-session .
-.Fl r
-allows a control mode client to provide information about a pane via a report
-(such as the response to OSC 10).
-The argument is a pane ID (with a leading
-.Ql % ) ,
-a colon, then a report escape sequence.
-.Pp
-.Fl l
-requests the clipboard from the client using the
-.Xr xterm 1
-escape sequence and stores it in a new paste buffer.
-.Pp
-.Fl L ,
-.Fl R ,
-.Fl U
-and
-.Fl D
-move the visible portion of the window left, right, up or down
-by
-.Ar adjustment ,
-if the window is larger than the client.
-.Fl c
-resets so that the position follows the cursor.
-See the
-.Ic window\-size
-option.
+.It Xr tmux-new-session 1
+Create a new session and its initial window.
 .Tg rename
-.It Xo Ic rename\-session
-.Op Fl t Ar target\-session
-.Ar new\-name
-.Xc
-.D1 Pq alias: Ic rename
-Rename the session to
-.Ar new\-name .
-.It Xo Ic server\-access
-.Op Fl adglrw
-.Op Ar user | group
-.Xc
-Change the access or read/write permission of
-.Ar user
-or
-.Ar group .
-The user running the
-.Nm
-server (its owner) and the root user cannot be changed and are always
-permitted access.
-.Fl g
-changes a group rather than a user.
-.Pp
-.Fl a
-and
-.Fl d
-are used to give or revoke access for the specified user or group.
-If a client is already attached, the
-.Fl d
-flag causes it to be detached unless it is still permitted by another entry.
-.Pp
-.Fl r
-and
-.Fl w
-change the permissions for
-.Ar user
-or
-.Ar group :
-.Fl r
-makes matching clients read-only and
-.Fl w
-writable.
-.Fl l
-lists current access permissions.
-User entries are shown with
-.Ql U ,
-group entries with
-.Ql G ,
-and read-only or writable entries with
-.Ql R
-or
-.Ql W ,
-for example
-.Ql user1 (U,W)
-or
-.Ql testgroup (G,R) .
-If both a user and group entry match a client, the user entry takes
-precedence.
-Only the effective group ID of the client is used, not its supplementary
-groups.
-.Pp
-By default, the access list is empty and
-.Nm
-creates sockets with file system permissions preventing access by any user
-other than the owner (and root).
-These permissions must be changed manually.
-Great care should be taken not to allow access to untrusted users even
-read-only.
+.It Xr tmux-refresh-client 1
+Refresh a client or change its visible window area.
+.It Xr tmux-rename-session 1
+Rename a session.
 .Tg showmsgs
-.It Xo Ic show\-messages
-.Op Fl JT
-.Op Fl t Ar target\-client
-.Xc
-.D1 Pq alias: Ic showmsgs
-Show server messages or information.
-Messages are stored, up to a maximum of the limit set by the
-.Ar message\-limit
-server option.
-.Fl J
-and
-.Fl T
-show debugging information about jobs and terminals.
+.It Xr tmux-server-access 1
+Change or list server access and write permissions.
 .Tg source
-.It Xo Ic source\-file
-.Op Fl Fnqv
-.Op Fl t Ar target\-pane
-.Ar path ...
-.Xc
-.D1 Pq alias: Ic source
-Execute commands from one or more files specified by
-.Ar path
-(which may be
-.Xr glob 7
-patterns).
-If
-.Fl F
-is present, then
-.Ar path
-is expanded as a format.
-If
-.Fl q
-is given, no error will be returned if
-.Ar path
-does not exist.
-With
-.Fl n ,
-the file is parsed but no commands are executed.
-.Fl v
-shows the parsed commands and line numbers if possible.
+.It Xr tmux-show-messages 1
+Show the server message log or debugging information.
 .Tg start
-.It Ic start\-server
-.D1 Pq alias: Ic start
-Start the
-.Nm
-server, if not already running, without creating any sessions.
-.Pp
-Note that as by default the
-.Nm
-server will exit with no sessions, this is only useful if a session is created
-in
-.Pa \[ti]/.tmux.conf ,
-.Ic exit\-empty
-is turned off, or another command is run as part of the same command sequence.
-For example:
-.Bd -literal -offset indent
-$ tmux start \\; show \-g
-.Ed
+.It Xr tmux-source-file 1
+Execute commands from one or more configuration files.
 .Tg suspendc
-.It Xo Ic suspend\-client
-.Op Fl t Ar target\-client
-.Xc
-.D1 Pq alias: Ic suspendc
-Suspend a client by sending
-.Dv SIGTSTP
-(tty stop).
+.It Xr tmux-start-server 1
+Start the tmux server without creating a session.
 .Tg switchc
-.It Xo Ic switch\-client
-.Op Fl ElnprZ
-.Op Fl c Ar target\-client
-.Op Fl O Ar sort\-order
-.Op Fl t Ar target\-session
-.Op Fl T Ar key\-table
-.Xc
-.D1 Pq alias: Ic switchc
-Switch the current session for client
-.Ar target\-client
-to
-.Ar target\-session .
-As a special case,
-.Fl t
-may refer to a pane (a target that contains
-.Ql \&: ,
-.Ql \&.
-or
-.Ql % ) ,
-to change session, window and pane.
-In that case,
-.Fl Z
-keeps the window zoomed if it was zoomed.
-If
-.Fl l ,
-.Fl n
-or
-.Fl p
-is used, the client is moved to the last, next or previous session
-respectively.
-.Fl O
-may be used with
-.Fl n
-and
-.Fl p
-to specify the field to sort on: one of
-.Ql name ,
-.Ql size ,
-.Ql creation
-(time), or
-.Ql activity
-(time).
-.Fl r
-toggles the client
-.Ic read\-only
-and
-.Ic ignore\-size
-flags (see the
-.Ic attach\-session
-command).
-.Pp
-If
-.Fl E
-is used,
-.Ic update\-environment
-option will not be applied.
-.Pp
-.Fl T
-sets the client's key table; the next key will be looked up using
-.Ar key\-table .
-After that key, the client is returned to its default key table (normally
-.Em root ) .
-This may be used to configure multiple prefix keys, or to bind commands to
-sequences of keys.
-For example, to make typing
-.Ql abc
-run the
-.Ic list\-keys
-command:
-.Bd -literal -offset indent
-bind\-key \-Ttable2 c list\-keys
-bind\-key \-Ttable1 b switch\-client \-Ttable2
-bind\-key \-Troot   a switch\-client \-Ttable1
-.Ed
+.It Xr tmux-suspend-client 1
+Suspend a client by sending SIGTSTP (tty stop).
+.It Xr tmux-switch-client 1
+Switch a client to another session, window, or pane.
 .El
 .Sh WINDOWS AND PANES
 Each window displayed by
@@ -2608,51 +2142,8 @@ The synopsis for the
 .Ic copy\-mode
 command is:
 .Bl -tag -width Ds
-.It Xo Ic copy\-mode
-.Op Fl dekHMqSu
-.Op Fl s Ar src\-pane
-.Op Fl t Ar target\-pane
-.Xc
-Enter copy mode.
-.Pp
-.Fl u
-enters copy mode and scrolls one page up and
-.Fl d
-one page down.
-.Fl H
-hides the position indicator in the top right.
-.Fl q
-cancels copy mode and any other modes.
-.Pp
-.Fl M
-begins a mouse drag (only valid if bound to a mouse key binding, see
-.Sx MOUSE SUPPORT ) .
-.Pp
-.Fl S
-enters copy\-mode and scrolls when bound to a mouse drag event; See
-.Ic scroll\-to\-mouse .
-.Pp
-.Fl s
-copies from
-.Ar src\-pane
-instead of
-.Ar target\-pane .
-.Pp
-.Fl e
-specifies that scrolling to the bottom of the history (to the visible screen)
-should exit copy mode.
-This will not happen if a selection is present.
-While in copy mode, pressing a key other than those used for scrolling will
-disable this behaviour.
-This is intended to allow fast scrolling through a pane's history, for
-example with:
-.Bd -literal -offset indent
-bind PageUp copy\-mode \-eu
-bind PageDown copy\-mode \-ed
-.Ed
-.Pp
-.Fl k
-kills the pane when the mode is exited.
+.It Xr tmux-copy-mode 1
+Enter copy mode to view pane history and copy text.
 .El
 .Pp
 A number of preset arrangements of panes are available, these are called
@@ -2719,1559 +2210,115 @@ from which the layout was originally defined.
 Commands related to windows and panes are as follows:
 .Bl -tag -width Ds
 .Tg breakp
-.It Xo Ic break\-pane
-.Op Fl abdPW
-.Op Fl F Ar format
-.Op Fl n Ar window\-name
-.Op Fl s Ar src\-pane
-.Op Fl t Ar dst\-window
-.Op Fl x Ar width
-.Op Fl y Ar height
-.Op Fl X Ar x-position
-.Op Fl Y Ar y-position
-.Xc
-.D1 Pq alias: Ic breakp
-Break
-.Ar src\-pane
-off from its containing window to make it the only pane in
-.Ar dst\-window .
-With
-.Fl a
-or
-.Fl b ,
-the window is moved to the next index after or before (existing windows are
-moved if necessary).
-If
-.Fl d
-is given, the new window does not become the current window.
-The
-.Fl P
-option prints information about the new window after it has been created.
-By default, it uses the format
-.Ql #{session_name}:#{window_index}.#{pane_index}
-but a different format may be specified with
-.Fl F .
-.Pp
-If the
-.Fl W
-option is given,
-.Ar src\-pane
-is lifted out of the tiled layout and made floating.
-The
-.Fl x
-and
-.Fl y
-options set the width and height of the floating pane in columns and lines
-respectively.
-The default is half the window width and a quarter the window height.
-The
-.Fl X
-and
-.Fl Y
-options set the position of the upper-left corner of the pane.
-If omitted, new floating panes are cascaded from the top-left of the window.
-The
-.Fl x ,
-.Fl y ,
-.Fl X ,
-and
-.Fl Y
-options may be followed by
-.Ql %
-to specify a percentage of the window size.
-.Pp
-If the pane had previously been floating, the position and sizes are restored
-from the saved values not specified by the
-.Fl x ,
-.Fl y ,
-.Fl X ,
-and
-.Fl Y
-options.
-.Pp
-If
-.Fl d
-is given, the active pane is not changed.
-The pane must not already be floating or hidden, and the window must not
-be zoomed.
 .Tg capturep
-.It Xo Ic capture\-pane
-.Op Fl aeFHILpPRqCJMN
-.Op Fl b Ar buffer\-name
-.Op Fl E Ar end\-line
-.Op Fl S Ar start\-line
-.Op Fl t Ar target\-pane
-.Xc
-.D1 Pq alias: Ic capturep
-Capture the contents of a pane.
-If
-.Fl p
-is given, the output goes to stdout, otherwise to the buffer specified with
-.Fl b
-or a new buffer if omitted.
-If
-.Fl a
-is given, the alternate screen is used, and the history is not accessible.
-If no alternate screen exists, an error will be returned unless
-.Fl q
-is given.
-Similarly, if the pane is in a mode,
-.Fl M
-uses the screen for the mode.
-If
-.Fl e
-is given, the output includes escape sequences for text and background
-attributes.
-.Fl C
-also escapes non-printable characters as octal \exxx.
-.Fl T
-ignores trailing positions that do not contain a character.
-.Fl N
-preserves trailing spaces at each line's end and
-.Fl J
-preserves trailing spaces and joins any wrapped lines;
-.Fl J
-implies
-.Fl T .
-.Fl P
-captures only any output that the pane has received that is the beginning of an
-as-yet incomplete escape sequence.
-.Fl L
-includes the line number at the start of each line and
-.Fl I
-includes the time each line entered the history, or zero if not available.
-.Fl F
-includes the flags (where
-.Ql -
-is no flags,
-.Ql D
-is an unused line,
-.Ql O
-is a line marked as output,
-.Ql P
-is a line marked as a prompt,
-.Ql X
-is a line containing extended cells and
-.Ql H
-is a line with hyperlinks).
-With
-.Fl H ,
-only hyperlinks in the specified lines are captured.
-Multiple hyperlinks on the same line are separated by spaces.
-.Fl R
-dumps the internal grid data for diagnostics.
-.Pp
-.Fl S
-and
-.Fl E
-specify the starting and ending line numbers, zero is the first line of the
-visible pane and negative numbers are lines in the history.
-.Ql \-
-to
-.Fl S
-is the start of the history and to
-.Fl E
-the end of the visible pane.
-The default is to capture only the visible contents of the pane.
-.It Xo
-.Ic choose\-client
-.Op Fl hkNryZ
-.Op Fl F Ar format
-.Op Fl f Ar filter
-.Op Fl K Ar key\-format
-.Op Fl O Ar sort\-order
-.Op Fl t Ar target\-pane
-.Op Ar template
-.Xc
-Put a pane into client mode, allowing a client to be selected interactively from
-a list.
-Each client is shown on one line.
-A shortcut key is shown on the left in brackets allowing for immediate choice,
-or the list may be navigated and an item chosen or otherwise manipulated using
-the keys below.
-.Fl Z
-zooms the pane.
-.Fl y
-disables any confirmation prompts.
-The following keys may be used in client mode:
-.Bl -column "KeyXXXXXX" "Function" -offset indent
-.It Sy "Key" Ta Sy "Function"
-.It Li "Enter" Ta "Choose selected client"
-.It Li "Up" Ta "Select previous client"
-.It Li "Down" Ta "Select next client"
-.It Li "C\-s" Ta "Search by name"
-.It Li "n" Ta "Repeat last search forwards"
-.It Li "N" Ta "Repeat last search backwards"
-.It Li "t" Ta "Toggle if client is tagged"
-.It Li "T" Ta "Tag no clients"
-.It Li "C\-t" Ta "Tag all clients"
-.It Li "d" Ta "Detach selected client"
-.It Li "D" Ta "Detach tagged clients"
-.It Li "x" Ta "Detach and HUP selected client"
-.It Li "X" Ta "Detach and HUP tagged clients"
-.It Li "z" Ta "Suspend selected client"
-.It Li "Z" Ta "Suspend tagged clients"
-.It Li "f" Ta "Enter a format to filter items"
-.It Li "c" Ta "Clear the current filter"
-.It Li "O" Ta "Change sort order"
-.It Li "r" Ta "Reverse sort order"
-.It Li "v" Ta "Toggle preview"
-.It Li "i" Ta "Change view (preview and client information)"
-.It Li "F1 or C\-h" Ta "Display help"
-.It Li "q" Ta "Exit mode"
-.El
-.Pp
-After a client is chosen,
-.Ql %%
-is replaced by the client name in
-.Ar template
-and the result executed as a command.
-If
-.Ar template
-is not given, "detach\-client \-t \[aq]%%\[aq]" is used.
-.Pp
-.Fl O
-specifies the initial sort order: one of
-.Ql name ,
-.Ql size ,
-.Ql creation
-(time), or
-.Ql activity
-(time).
-.Fl r
-reverses the sort order.
-.Fl f
-specifies an initial filter: the filter is a format - if it evaluates to zero,
-the item in the list is not shown, otherwise it is shown.
-If a filter would lead to an empty list, it is ignored.
-.Fl F
-specifies the format for each item in the list and
-.Fl K
-a format for each shortcut key; both are evaluated once for each line.
-.Pp
-.Fl N
-starts without the preview or if given twice with the larger preview.
-.Fl h
-hides the pane containing the mode.
-.Fl k
-kills the pane when the mode is exited.
-.Pp
-The
-.Ic choose-client
-command works only if at least one client is attached.
-.It Xo
-.Ic choose\-tree
-.Op Fl GhikNrswyZ
-.Op Fl F Ar format
-.Op Fl f Ar filter
-.Op Fl K Ar key\-format
-.Op Fl O Ar sort\-order
-.Op Fl t Ar target\-pane
-.Op Ar template
-.Xc
-Put a pane into tree mode, where a session, window or pane may be chosen
-interactively from a tree.
-Each session, window or pane is shown on one line.
-A shortcut key is shown on the left in brackets allowing for immediate choice,
-or the tree may be navigated and an item chosen or otherwise manipulated using
-the keys below.
-.Fl s
-starts with sessions collapsed and
-.Fl w
-with windows collapsed.
-.Fl Z
-zooms the pane.
-.Fl y
-disables any confirmation prompts.
-The following keys may be used in tree mode:
-.Bl -column "KeyXXXXXX" "Function" -offset indent
-.It Sy "Key" Ta Sy "Function"
-.It Li "Enter" Ta "Choose selected item"
-.It Li "Up" Ta "Select previous item"
-.It Li "Down" Ta "Select next item"
-.It Li "S\-Up" Ta "Swap the current window with the previous one"
-.It Li "S\-Down" Ta "Swap the current window with the next one"
-.It Li "+" Ta "Expand selected item"
-.It Li "\-" Ta "Collapse selected item"
-.It Li "M\-+" Ta "Expand all items"
-.It Li "M\-\-" Ta "Collapse all items"
-.It Li "x" Ta "Kill selected item"
-.It Li "X" Ta "Kill tagged items"
-.It Li "<" Ta "Scroll list of previews left"
-.It Li ">" Ta "Scroll list of previews right"
-.It Li "C\-s" Ta "Search by name"
-.It Li "m" Ta "Set the marked pane"
-.It Li "M" Ta "Clear the marked pane"
-.It Li "n" Ta "Repeat last search forwards"
-.It Li "N" Ta "Repeat last search backwards"
-.It Li "t" Ta "Toggle if item is tagged"
-.It Li "T" Ta "Tag no items"
-.It Li "C\-t" Ta "Tag all items"
-.It Li "\&:" Ta "Run a command for each tagged item"
-.It Li "f" Ta "Enter a format to filter items"
-.It Li "c" Ta "Clear the current filter"
-.It Li "H" Ta "Jump to the starting pane"
-.It Li "O" Ta "Change sort order"
-.It Li "r" Ta "Reverse sort order"
-.It Li "v" Ta "Toggle preview"
-.It Li "i" Ta "Change view (preview and session, window and pane information)"
-.It Li "F1 or C\-h" Ta "Display help"
-.It Li "q" Ta "Exit mode"
-.El
-.Pp
-After a session, window or pane is chosen, the first instance of
-.Ql %%
-and all instances of
-.Ql %1
-are replaced by the target in
-.Ar template
-and the result executed as a command.
-If
-.Ar template
-is not given, "switch\-client \-t \[aq]%%\[aq]" is used.
-.Pp
-.Fl O
-specifies the initial sort order: one of
-.Ql index ,
-.Ql name ,
-.Ql activity
-(time)
-or
-.Ql z .
-.Fl r
-reverses the sort order.
-.Fl f
-specifies an initial filter: the filter is a format - if it evaluates to zero,
-the item in the list is not shown, otherwise it is shown.
-If a filter would lead to an empty list, it is ignored.
-.Fl F
-specifies the format for each item in the tree and
-.Fl K
-a format for each shortcut key; both are evaluated once for each line.
-.Fl G
-includes all sessions in any session groups in the tree rather than only the
-first.
-.Pp
-.Fl N
-starts without the preview or if given twice with the larger preview.
-.Fl i
-starts showing client information instead of the preview.
-.Fl h
-hides the pane containing the mode.
-.Fl k
-kills the pane when the mode is exited.
-.Fl h
-and
-.Fl k
-are intended to ease use of the mode in a floating pane; for example:
-.Bd -literal -offset indent
-bind s 'new-pane -x50% -y50% -E; choose-tree -hks'
-.Ed
-.Pp
-The
-.Ic choose-tree
-command works only if at least one client is attached.
-.It Xo
-.Ic customize\-mode
-.Op Fl kNZ
-.Op Fl F Ar format
-.Op Fl f Ar filter
-.Op Fl t Ar target\-pane
-.Op Ar template
-.Xc
-Put a pane into customize mode, where options and key bindings may be browsed
-and modified from a list.
-Option values in the list are shown for the active pane in the current window.
-.Fl Z
-zooms the pane.
-The following keys may be used in customize mode:
-.Bl -column "KeyXXXXXX" "Function" -offset indent
-.It Sy "Key" Ta Sy "Function"
-.It Li "Enter" Ta "Set pane, window, session or global option value"
-.It Li "Up" Ta "Select previous item"
-.It Li "Down" Ta "Select next item"
-.It Li "+" Ta "Expand selected item"
-.It Li "\-" Ta "Collapse selected item"
-.It Li "M\-+" Ta "Expand all items"
-.It Li "M\-\-" Ta "Collapse all items"
-.It Li "s" Ta "Set option value or key attribute"
-.It Li "S" Ta "Set global option value"
-.It Li "w" Ta "Set window option value, if option is for pane and window"
-.It Li "d" Ta "Set an option or key to the default"
-.It Li "D" Ta "Set tagged options and tagged keys to the default"
-.It Li "e" Ta "Open the value in an editor"
-.It Li "u" Ta "Unset an option (set to default value if global) or unbind a key"
-.It Li "U" Ta "Unset tagged options and unbind tagged keys"
-.It Li "C\-s" Ta "Search by name"
-.It Li "n" Ta "Repeat last search forwards"
-.It Li "N" Ta "Repeat last search backwards"
-.It Li "t" Ta "Toggle if item is tagged"
-.It Li "T" Ta "Tag no items"
-.It Li "C\-t" Ta "Tag all items"
-.It Li "f" Ta "Enter a format to filter items"
-.It Li "c" Ta "Clear the current filter"
-.It Li "v" Ta "Toggle option information"
-.It Li "F1 or C\-h" Ta "Display help"
-.It Li "q" Ta "Exit mode"
-.El
-.Pp
-.Fl f
-specifies an initial filter: the filter is a format - if it evaluates to zero,
-the item in the list is not shown, otherwise it is shown.
-If a filter would lead to an empty list, it is ignored.
-.Fl F
-specifies the format for each item in the tree.
-.Pp
-.Fl N
-starts without the option information.
-.Fl k
-kills the pane when the mode is exited.
-.Pp
-The
-.Ic customize-mode
-command works only if at least one client is attached.
-.It Xo
-.Ic switch\-mode
-.Op Fl kswZ
-.Op Fl F Ar format
-.Op Fl t Ar target\-pane
-.Op Ar command
-.Xc
-Put a pane into switch mode, where a session or window may be chosen
-interactively from a list.
-Each session or window is shown on one line and the list is narrowed by typing:
-the typed text is matched against each item with fuzzy
-matching and only matching items are shown, sorted by how well they match.
-.Fl s
-lists sessions (the default) and
-.Fl w
-lists windows.
-.Fl Z
-zooms the pane.
-The following keys may be used in switch mode:
-.Bl -column "KeyXXX" "Function" -offset indent
-.It Sy "Key" Ta Sy "Function"
-.It Li "Enter" Ta "Choose the selected item"
-.It Li "Up" Ta "Select the previous item"
-.It Li "Down" Ta "Select the next item"
-.It Li "Escape" Ta "Exit mode"
-.El
-.Pp
-After a session or window is chosen, the first instance of
-.Ql %%
-and all instances of
-.Ql %1
-are replaced by the target in
-.Ar command
-and the result executed as a command.
-If
-.Ar command
-is not given, "switch\-client \-Zt \[aq]%%\[aq]" is used.
-.Fl F
-specifies the format for each item in the list.
-.Fl k
-kills the pane when the mode is exited.
-.Pp
-The appearance of matched characters is controlled by the
-.Ic switch\-mode\-match\-style
-option.
-.It Xo
+.It Xr tmux-break-pane 1
+Move a pane out of its window into a new window, or make it floating.
+.It Xr tmux-capture-pane 1
+Capture pane contents to a buffer or standard output.
+.It Xr tmux-choose-client 1
+Choose an attached client interactively from a list.
+.It Xr tmux-choose-tree 1
+Choose a session, window, or pane interactively from a tree.
+.It Xr tmux-customize-mode 1
+Browse and change options and key bindings in a pane.
+.It Xr tmux-switch-mode 1
+Choose a session or window from an interactive list.
 .Tg displayp
-.Ic display\-panes
-.Op Fl kNZ
-.Op Fl d Ar duration
-.Op Fl s Ar source\-window
-.Op Fl t Ar target\-pane
-.Op Ar template
-.Xc
-.D1 Pq alias: Ic displayp
-Put
-.Ar target\-pane
-into panes mode, which displays a preview of the window and a visible
-indicator of each pane.
-If
-.Fl s
-is given, the panes in
-.Ar source\-window
-are displayed instead of those in the window containing
-.Ar target\-pane .
-See the
-.Ic display\-panes\-colour ,
-.Ic display\-panes\-active\-colour ,
-.Ic display\-panes\-border\-style ,
-.Ic display\-panes\-format
-and
-.Ic display\-panes\-time
-window options.
-The indicator is closed when a key is pressed (unless
-.Fl N
-is given) or
-.Ar duration
-milliseconds have passed.
-If
-.Fl d
-is not given,
-.Ic display\-panes\-time
-is used.
-A duration of zero means the indicator stays until a key is pressed.
-The mode is zoomed by default;
-.Fl Z
-starts it unzoomed.
-.Fl k
-kills the pane when the mode is exited.
-While the indicator is on screen, a pane may be chosen with the
-.Ql 0
-to
-.Ql 9
-keys or by clicking it with the mouse, which will cause
-.Ar template
-to be executed as a command with
-.Ql %%
-substituted by the pane ID.
-The default
-.Ar template
-is "select\-pane \-t \[aq]%%\[aq]".
 .Tg findw
-.It Xo Ic find\-window
-.Op Fl iCNrTZ
-.Op Fl t Ar target\-pane
-.Ar match\-string
-.Xc
-.D1 Pq alias: Ic findw
-Search for a
-.Xr glob 7
-pattern or, with
-.Fl r ,
-regular expression
-.Ar match\-string
-in window names, titles, and visible content (but not history).
-The flags control matching behavior:
-.Fl C
-matches only visible window contents,
-.Fl N
-matches only the window name and
-.Fl T
-matches only the window title.
-.Fl i
-makes the search ignore case.
-The default is
-.Fl CNT .
-.Fl Z
-zooms the pane.
-.Pp
-The
-.Ic find-window
-command works only if at least one client is attached.
+.It Xr tmux-display-panes 1
+Show pane indicators and allow a pane to be selected.
 .Tg joinp
-.It Xo Ic join\-pane
-.Op Fl bdfhv
-.Op Fl l Ar size
-.Op Fl s Ar src\-pane
-.Op Fl t Ar dst\-pane
-.Xc
-.D1 Pq alias: Ic joinp
-Like
-.Ic split\-window ,
-but instead of splitting
-.Ar dst\-pane
-and creating a new pane, split it and move
-.Ar src\-pane
-into the space.
-This can be used to reverse
-.Ic break\-pane .
-The
-.Fl b
-option causes
-.Ar src\-pane
-to be joined to left of or above
-.Ar dst\-pane .
-.Pp
-If
-.Fl s
-is omitted and a marked pane is present (see
-.Ic select\-pane
-.Fl m ) ,
-the marked pane is used rather than the current pane.
-.Pp
-If
-.Ar src\-pane
-is floating and
-.Ar dst\-pane
-is either unspecified or equal to
-.Ar src\-pane ,
-.Ar src\-pane
-is returned to its previous position in the layout.
+.It Xr tmux-find-window 1
+Search window names, pane titles, and visible pane content.
 .Tg killp
-.It Xo Ic kill\-pane
-.Op Fl a
-.Op Fl f Ar filter
-.Op Fl t Ar target\-pane
-.Xc
-.D1 Pq alias: Ic killp
-Destroy the given pane.
-If no panes remain in the containing window, it is also destroyed.
-The
-.Fl a
-option kills all panes in the window except the pane given with
-.Fl t .
-When
-.Fl a
-is given,
-.Fl f
-specifies a filter.
-Only panes for which the filter is true are killed.
+.It Xr tmux-join-pane 1
+Move a pane into another pane's window, splitting the destination pane.
 .Tg killw
-.It Xo Ic kill\-window
-.Op Fl a
-.Op Fl f Ar filter
-.Op Fl t Ar target\-window
-.Xc
-.D1 Pq alias: Ic killw
-Kill the current window or the window at
-.Ar target\-window ,
-removing it from any sessions to which it is linked.
-The
-.Fl a
-option kills all windows in the session except the window given with
-.Fl t .
-When
-.Fl a
-is given,
-.Fl f
-specifies a filter.
-Only windows for which the filter is true are killed.
+.It Xr tmux-kill-pane 1
+Destroy a pane.
 .Tg lastp
-.It Xo Ic last\-pane
-.Op Fl deZ
-.Op Fl t Ar target\-window
-.Xc
-.D1 Pq alias: Ic lastp
-Select the last (previously selected) pane.
-.Fl Z
-keeps the window zoomed if it was zoomed.
-.Fl e
-enables or
-.Fl d
-disables input to the pane.
+.It Xr tmux-kill-window 1
+Destroy a window and remove it from all sessions.
 .Tg last
-.It Ic last\-window Op Fl t Ar target\-session
-.D1 Pq alias: Ic last
-Select the last (previously selected) window.
-If no
-.Ar target\-session
-is specified, select the last window of the current session.
+.It Xr tmux-last-pane 1
+Select the previously active pane in a window.
 .Tg link
-.It Xo Ic link\-window
-.Op Fl abdk
-.Op Fl s Ar src\-window
-.Op Fl t Ar dst\-window
-.Xc
-.D1 Pq alias: Ic linkw
-Link the window at
-.Ar src\-window
-to the specified
-.Ar dst\-window .
-If
-.Ar dst\-window
-is specified and no such window exists, the
-.Ar src\-window
-is linked there.
-With
-.Fl a
-or
-.Fl b
-the window is moved to the next index after or before
-.Ar dst\-window
-(existing windows are moved if necessary).
-If
-.Fl k
-is given and
-.Ar dst\-window
-exists, it is killed, otherwise an error is generated.
-If
-.Fl d
-is given, the newly linked window is not selected.
+.It Xr tmux-last-window 1
+Select the previously selected window.
 .Tg lsp
-.It Xo Ic list\-panes
-.Op Fl ars
-.Op Fl F Ar format
-.Op Fl f Ar filter
-.Op Fl O Ar sort\-order
-.Op Fl t Ar target
-.Xc
-.D1 Pq alias: Ic lsp
-If
-.Fl a
-is given,
-.Ar target
-is ignored and all panes on the server are listed.
-If
-.Fl s
-is given,
-.Ar target
-is a session (or the current session).
-If neither is given,
-.Ar target
-is a window (or the current window).
-.Fl F
-specifies the format of each line and
-.Fl f
-a filter.
-Only panes for which the filter is true are shown.
-See the
-.Sx FORMATS
-section.
-.Fl O
-specifies the sort order: one of
-.Ql name
-(title),
-.Ql index ,
-.Ql size
-(area),
-.Ql creation
-(time), or
-.Ql activity
-(time).
-.Fl r
-reverses the sort order.
+.It Xr tmux-link-window 1
+Link a window into a session without removing its existing link.
 .Tg lsw
-.It Xo Ic list\-windows
-.Op Fl ar
-.Op Fl F Ar format
-.Op Fl f Ar filter
-.Op Fl O Ar sort\-order
-.Op Fl t Ar target\-session
-.Xc
-.D1 Pq alias: Ic lsw
-If
-.Fl a
-is given, list all windows on the server.
-Otherwise, list windows in the current session or in
-.Ar target\-session .
-.Fl F
-specifies the format of each line and
-.Fl f
-a filter.
-Only windows for which the filter is true are shown.
-See the
-.Sx FORMATS
-section.
-.Fl O
-specifies the sort order: one of
-.Ql index ,
-.Ql name ,
-.Ql size
-(area),
-.Ql creation
-(time),
-or
-.Ql activity
-(time).
-.Fl r
-reverses the sort order.
+.It Xr tmux-list-panes 1
+List panes in a window, session, or across the server.
 .Tg movep
-.It Xo Ic move\-pane
-.Op Fl bdfhMv
-.Op Fl D Op Ar lines
-.Op Fl l Ar size
-.Op Fl L Op Ar columns
-.Op Fl P Ar position
-.Op Fl R Op Ar columns
-.Op Fl s Ar src\-pane
-.Op Fl t Ar dst\-pane
-.Op Fl U Op Ar lines
-.Op Fl X Ar x\-position
-.Op Fl Y Ar y\-position
-.Op Fl z Ar z\-index
-.Xc
-.D1 Pq alias: Ic movep
-Does the same as
-.Ic join\-pane ,
-except if given
-.Fl D ,
-.Fl L ,
-.Fl P ,
-.Fl R ,
-.Fl U ,
-.Fl X ,
-.Fl Y
-or
-.Fl z
-in which case move the target floating pane.
-.Fl D ,
-.Fl L ,
-.Fl R
-and
-.Fl U
-move it down, left, right or up by
-.Ar lines
-or
-.Ar columns
-(one if omitted).
-.Fl P
-moves it to
-.Ar position ,
-which may be one of:
-.Bl -column "XXXXXXXXXXXXXXXXXX" "X"
-.It Sy "Position" Ta Sy "Meaning"
-.It Li "top-left" Ta "Top left"
-.It Li "top-centre" Ta "Top and horizontal centre"
-.It Li "top-right" Ta "Top right"
-.It Li "centre-left" Ta "Vertical centre and left"
-.It Li "centre" Ta "Centre"
-.It Li "centre-right" Ta "Vertical centre and right"
-.It Li "bottom-left" Ta "Bottom left"
-.It Li "bottom-centre" Ta "Bottom and horizontal centre"
-.It Li "bottom-right" Ta "Bottom right"
-.It Li "top-left-centre" Ta "Centre of top-left quadrant"
-.It Li "top-right-centre" Ta "Centre of top-right quadrant"
-.It Li "bottom-left-centre" Ta "Centre of bottom-left quadrant"
-.It Li "bottom-right-centre" Ta "Centre of bottom-right quadrant"
-.It Li "front" Ta "Front of floating panes"
-.It Li "back" Ta "Back of floating panes"
-.It Li "forward" Ta "Forward one floating pane"
-.It Li "backward" Ta "Backward one floating pane"
-.It Li "forward-loop" Ta "Forward but back if already at front"
-.It Li "backward-loop" Ta "Backward but front if already at back"
-.El
-.Pp
-.Fl X
-and
-.Fl Y
-move it to an absolute position.
-.Fl z
-moves the pane to the given
-.Ar z-index ,
-where zero is the front.
-.Pp
-.Fl M
-begins a mouse drag (only valid if bound to a mouse key binding, see
-.Sx MOUSE SUPPORT ) .
+.It Xr tmux-list-windows 1
+List windows in a session or across the server.
 .Tg movew
-.It Xo Ic move\-window
-.Op Fl abrdk
-.Op Fl s Ar src\-window
-.Op Fl t Ar dst\-window
-.Xc
-.D1 Pq alias: Ic movew
-This is similar to
-.Ic link\-window ,
-except the window at
-.Ar src\-window
-is moved to
-.Ar dst\-window .
-With
-.Fl r ,
-all windows in the session are renumbered in sequential order, respecting
-the
-.Ic base\-index
-option.
+.It Xr tmux-move-pane 1
+Move a pane into another window or reposition a floating pane.
 .Tg neww
-.It Xo Ic new\-window
-.Op Fl abdEkPS
-.Op Fl c Ar start\-directory
-.Op Fl e Ar environment
-.Op Fl F Ar format
-.Op Fl n Ar window\-name
-.Op Fl t Ar target\-window
-.Op Ar shell\-command Op Ar argument ...
-.Xc
-.D1 Pq alias: Ic neww
-Create a new window.
-With
-.Fl a
-or
-.Fl b ,
-the new window is inserted at the next index after or before the specified
-.Ar target\-window ,
-moving windows up if necessary;
-otherwise
-.Ar target\-window
-is the new window location.
-.Pp
-If
-.Fl d
-is given, the session does not make the new window the current window.
-If
-.Fl E
-is given, the initial pane is created without a running command.
-.Ar target\-window
-represents the window to be created; if the target already exists an error is
-shown, unless the
-.Fl k
-flag is used, in which case it is destroyed.
-.Ar window\-name
-is the name given to the new window, if any.
-.Pp
-If
-.Fl S
-is given, an existing window is selected instead of creating a new one
-(unless
-.Fl d
-is also given in which case the command does nothing):
-.Ar target\-window
-is preferred if it already identifies an existing window; otherwise a
-window named
-.Ar window\-name
-is selected if one exists.
-.Pp
-.Ar shell\-command
-is the command to execute.
-If
-.Ar shell\-command
-is not specified, the value of the
-.Ic default\-command
-option is used.
-.Fl c
-specifies the working directory in which the new window is created.
-.Pp
-When the shell command completes, the window closes.
-See the
-.Ic remain\-on\-exit
-option to change this behaviour.
-.Pp
-.Fl e
-takes the form
-.Ql VARIABLE=value
-and sets an environment variable for the newly created window; it may be
-specified multiple times.
-.Pp
-The
-.Ev TERM
-environment variable must be set to
-.Ql screen
-or
-.Ql tmux
-for all programs running
-.Em inside
-.Nm .
-New windows will automatically have
-.Ql TERM=screen
-added to their environment, but care must be taken not to reset this in shell
-startup files or by the
-.Fl e
-option.
-.Pp
-The
-.Fl P
-option prints information about the new window after it has been created.
-By default, it uses the format
-.Ql #{session_name}:#{window_index}
-but a different format may be specified with
-.Fl F .
+.It Xr tmux-move-window 1
+Move a window to another index or session.
 .Tg newp
-.It Xo Ic new\-pane
-.Op Fl AbCDefhIkKLMOPvWZ
-.Op Fl B Ar border\-lines
-.Op Fl c Ar start\-directory
-.Op Fl e Ar environment
-.Op Fl F Ar format
-.Op Fl l Ar size
-.Op Fl m Ar message
-.Op Fl p Ar percentage
-.Op Fl R Ar inactive\-border\-style
-.Op Fl s Ar style
-.Op Fl S Ar active\-border\-style
-.Op Fl t Ar target\-pane
-.Op Fl T Ar title
-.Op Fl x Ar width
-.Op Fl y Ar height
-.Op Fl X Ar x-position
-.Op Fl Y Ar y-position
-.Op Ar shell\-command Op Ar argument ...
-.Xc
-.D1 Pq alias: Ic newp
-Creates a new floating pane.
-The
-.Fl x
-and
-.Fl y
-options set the width and height of the floating pane in columns and lines
-respectively.
-The default is half the window width and a quarter the window height.
-The
-.Fl X
-and
-.Fl Y
-options set the position of the upper-left corner of the pane.
-If omitted, new floating panes are cascaded from the top-left of the window.
-The
-.Fl x ,
-.Fl y ,
-.Fl X ,
-and
-.Fl Y
-options may be followed by
-.Ql %
-to specify a percentage of the window size.
-.Fl B
-sets the pane border lines for floating panes; see
-.Ic pane\-border\-lines .
-.Fl M
-may be used when bound to a mouse drag key; the new floating pane is resized to
-follow the mouse drag.
-.Fl A
-creates a floating pane which remains visible above a zoomed pane.
-.Fl O
-creates a modal pane.
-A modal pane is always the active pane and prevents interaction with any other
-panes while it is active.
-A window can only have one modal pane and it must be a floating pane.
-With
-.Fl K ,
-all keys, including the prefix key, are passed directly to the modal pane.
-With
-.Fl C ,
-the modal pane is closed when the mouse is clicked outside it.
-With
-.Fl D ,
-the modal pane is closed when
-.Ql Escape
-or
-.Ql C-c
-is pressed.
-.Pp
-The
-.Fl L
-option makes
-.Ic new\-pane
-behave like
-.Ic split\-window .
-.Pp
-All other options have the same meaning as for the
-.Ic split\-window
-command.
+.It Xr tmux-new-window 1
+Create a window in the current session.
 .Tg nextl
-.It Ic next\-layout Op Fl t Ar target\-window
-.D1 Pq alias: Ic nextl
-Move a window to the next layout and rearrange the panes to fit.
+.It Xr tmux-new-pane 1
+Create a floating pane in the current window.
 .Tg next
-.It Xo Ic next\-window
-.Op Fl a
-.Op Fl t Ar target\-session
-.Xc
-.D1 Pq alias: Ic next
-Move to the next window in the session.
-If
-.Fl a
-is used, move to the next window with an alert.
+.It Xr tmux-next-layout 1
+Move a window to the next layout and rearrange its panes to fit.
 .Tg pipep
-.It Xo Ic pipe\-pane
-.Op Fl IOo
-.Op Fl t Ar target\-pane
-.Op Ar shell\-command
-.Xc
-.D1 Pq alias: Ic pipep
-Pipe output sent by the program in
-.Ar target\-pane
-to a shell command or vice versa.
-A pane may only be connected to one command at a time, any existing pipe is
-closed before
-.Ar shell\-command
-is executed.
-The
-.Ar shell\-command
-string may contain the special character sequences supported by the
-.Ic status\-left
-option.
-If no
-.Ar shell\-command
-is given, the current pipe (if any) is closed.
-.Pp
-.Fl I
-and
-.Fl O
-specify which of the
-.Ar shell\-command
-output streams are connected to the pane:
-with
-.Fl I
-stdout is connected (so anything
-.Ar shell\-command
-prints is written to the pane as if it were typed);
-with
-.Fl O
-stdin is connected (so any output in the pane is piped to
-.Ar shell\-command ) .
-Both may be used together and if neither are specified,
-.Fl O
-is used.
-.Pp
-The
-.Fl o
-option only opens a new pipe if no previous pipe exists, allowing a pipe to
-be toggled with a single key, for example:
-.Bd -literal -offset indent
-bind\-key C\-p pipe\-pane \-o \[aq]cat >>\[ti]/output.#I\-#P\[aq]
-.Ed
+.It Xr tmux-next-window 1
+Move to the next window in a session.
 .Tg prevl
-.It Xo Ic previous\-layout
-.Op Fl t Ar target\-window
-.Xc
-.D1 Pq alias: Ic prevl
-Move to the previous layout in the session.
+.It Xr tmux-pipe-pane 1
+Pipe pane output to a shell command or send command output to a pane.
 .Tg prev
-.It Xo Ic previous\-window
-.Op Fl a
-.Op Fl t Ar target\-session
-.Xc
-.D1 Pq alias: Ic prev
-Move to the previous window in the session.
-With
-.Fl a ,
-move to the previous window with an alert.
+.It Xr tmux-previous-layout 1
+Move the target window to the previous layout in the session.
 .Tg renamew
-.It Xo Ic rename\-window
-.Op Fl t Ar target\-window
-.Ar new\-name
-.Xc
-.D1 Pq alias: Ic renamew
-Rename the current window, or the window at
-.Ar target\-window
-if specified, to
-.Ar new\-name .
+.It Xr tmux-previous-window 1
+Move to the previous window in a session.
 .Tg resizep
-.It Xo Ic resize\-pane
-.Op Fl MTZ
-.Op Fl D Ar lines
-.Op Fl L Ar columns
-.Op Fl R Ar columns
-.Op Fl U Ar lines
-.Op Fl x Ar width
-.Op Fl y Ar height
-.Op Fl t Ar target\-pane
-.Xc
-.D1 Pq alias: Ic resizep
-Resize a pane, up, down, left or right by a specified adjustment with
-.Fl U ,
-.Fl D ,
-.Fl L
-or
-.Fl R ;
-or to an absolute size with
-.Fl x
-or
-.Fl y .
-The adjustment is given in
-.Ar lines
-or
-.Ar columns
-(the default is 1);
-.Fl x
-and
-.Fl y
-may be a given as a number of
-.Ar lines
-or
-.Ar columns
-or followed by
-.Ql %
-for a percentage of the window size (for example
-.Ql \-x 10% ) .
-If
-.Ar target\-pane
-is floating,
-.Fl U ,
-.Fl D ,
-.Fl L ,
-and
-.Fl R
-target their respective borders, and negative values may be given.
-With
-.Fl Z ,
-the active pane is toggled between zoomed (occupying the whole of the window)
-and unzoomed (its normal position in the layout).
-.Pp
-.Fl M
-begins mouse resizing (only valid if bound to a mouse key binding, see
-.Sx MOUSE SUPPORT ) .
-.Pp
-.Fl T
-trims all lines below the current cursor position and moves lines out of the
-history to replace them.
+.It Xr tmux-rename-window 1
+Rename the current window.
 .Tg resizew
-.It Xo Ic resize\-window
-.Op Fl aADLRU
-.Op Fl t Ar target\-window
-.Op Fl x Ar width
-.Op Fl y Ar height
-.Op Ar adjustment
-.Xc
-.D1 Pq alias: Ic resizew
-Resize a window, up, down, left or right by
-.Ar adjustment
-with
-.Fl U ,
-.Fl D ,
-.Fl L
-or
-.Fl R ,
-or
-to an absolute size
-with
-.Fl x
-or
-.Fl y .
-The
-.Ar adjustment
-is given in lines or cells (the default is 1).
-.Fl A
-sets the size of the largest session containing the window;
-.Fl a
-the size of the smallest.
-This command will automatically set
-.Ic window\-size
-to manual in the window options.
+.It Xr tmux-resize-pane 1
+Resize a pane by an adjustment or to an absolute size.
 .Tg respawnp
-.It Xo Ic respawn\-pane
-.Op Fl \&Ek
-.Op Fl c Ar start\-directory
-.Op Fl e Ar environment
-.Op Fl t Ar target\-pane
-.Op Ar shell\-command Op Ar argument ...
-.Xc
-.D1 Pq alias: Ic respawnp
-Reactivate a pane in which the command has exited (see the
-.Ic remain\-on\-exit
-window option).
-If
-.Ar shell\-command
-is not given, the command used when the pane was created or last respawned is
-executed.
-The pane must be already inactive, unless
-.Fl k
-is given, in which case any existing command is killed.
-If
-.Fl E
-is given, the pane is left without a running command.
-.Fl c
-specifies a new working directory for the pane.
-The
-.Fl e
-option has the same meaning as for the
-.Ic new\-window
-command.
+.It Xr tmux-resize-window 1
+Increase or decrease a window's size.
 .Tg respawnw
-.It Xo Ic respawn\-window
-.Op Fl \&Ek
-.Op Fl c Ar start\-directory
-.Op Fl e Ar environment
-.Op Fl t Ar target\-window
-.Op Ar shell\-command Op Ar argument ...
-.Xc
-.D1 Pq alias: Ic respawnw
-Reactivate a window in which the command has exited (see the
-.Ic remain\-on\-exit
-window option).
-If
-.Ar shell\-command
-is not given, the command used when the window was created or last respawned is
-executed.
-The window must be already inactive, unless
-.Fl k
-is given, in which case any existing command is killed.
-If
-.Fl E
-is given, the window is left with one pane and without a running command.
-.Fl c
-specifies a new working directory for the window.
-The
-.Fl e
-option has the same meaning as for the
-.Ic new\-window
-command.
+.It Xr tmux-respawn-pane 1
+Restart the command in an inactive pane.
 .Tg rotatew
-.It Xo Ic rotate\-window
-.Op Fl DUZ
-.Op Fl t Ar target\-window
-.Xc
-.D1 Pq alias: Ic rotatew
-Rotate the positions of the panes within a window, either upward (numerically
-lower) with
-.Fl U
-or downward (numerically higher).
-.Fl Z
-keeps the window zoomed if it was zoomed.
+.It Xr tmux-respawn-window 1
+Restart the command in an inactive window.
 .Tg selectl
-.It Xo Ic select\-layout
-.Op Fl Enop
-.Op Fl t Ar target\-pane
-.Op Ar layout\-name
-.Xc
-.D1 Pq alias: Ic selectl
-Choose a specific layout for a window.
-If
-.Ar layout\-name
-is not given, the last preset layout used (if any) is reapplied.
-.Fl n
-and
-.Fl p
-are equivalent to the
-.Ic next\-layout
-and
-.Ic previous\-layout
-commands.
-.Fl o
-applies the last set layout if possible (undoes the most recent layout change).
-.Fl E
-spreads the current pane and any panes next to it out evenly.
+.It Xr tmux-rotate-window 1
+Rotate the pane positions within a window.
 .Tg selectp
-.It Xo Ic select\-pane
-.Op Fl DdeLlMmRUZ
-.Op Fl T Ar title
-.Op Fl t Ar target\-pane
-.Xc
-.D1 Pq alias: Ic selectp
-Make pane
-.Ar target\-pane
-the active pane in its window.
-If one of
-.Fl D ,
-.Fl L ,
-.Fl R ,
-or
-.Fl U
-is used, respectively the pane below, to the left, to the right, or above the
-target pane is used.
-.Fl Z
-keeps the window zoomed if it was zoomed.
-.Fl l
-is the same as using the
-.Ic last\-pane
-command.
-.Fl e
-enables or
-.Fl d
-disables input to the pane.
-.Fl T
-sets the pane title.
-.Pp
-.Fl m
-and
-.Fl M
-are used to set and clear the
-.Em marked pane .
-There is one marked pane at a time, setting a new marked pane clears the last.
-The marked pane is the default target for
-.Fl s
-to
-.Ic join\-pane ,
-.Ic move\-pane ,
-.Ic swap\-pane
-and
-.Ic swap\-window .
+.It Xr tmux-select-layout 1
+Choose a layout for the target window.
 .Tg selectw
-.It Xo Ic select\-window
-.Op Fl lnpT
-.Op Fl t Ar target\-window
-.Xc
-.D1 Pq alias: Ic selectw
-Select the window at
-.Ar target\-window .
-.Fl l ,
-.Fl n
-and
-.Fl p
-are equivalent to the
-.Ic last\-window ,
-.Ic next\-window
-and
-.Ic previous\-window
-commands.
-If
-.Fl T
-is given and the selected window is already the current window,
-the command behaves like
-.Ic last\-window .
+.It Xr tmux-select-pane 1
+Select a pane, change its input state, or mark it for pane commands.
 .Tg splitw
-.It Xo Ic split\-window
-.Op Fl bdefhIkPvZ
-.Op Fl B Ar border\-lines
-.Op Fl c Ar start\-directory
-.Op Fl e Ar environment
-.Op Fl F Ar format
-.Op Fl l Ar size
-.Op Fl m Ar message
-.Op Fl p Ar percentage
-.Op Fl R Ar inactive\-border\-style
-.Op Fl s Ar style
-.Op Fl S Ar active\-border\-style
-.Op Fl t Ar target\-pane
-.Op Fl T Ar title
-.Op Ar shell\-command Op Ar argument ...
-.Xc
-.D1 Pq alias: Ic splitw
-Create a new pane by splitting
-.Ar target\-pane .
-If
-.Fl d
-is given, the session does not make the new pane the current pane.
-.Fl Z
-zooms if the window is not zoomed, or keeps it zoomed if already zoomed.
-.Fl s
-sets the style for the pane content.
-.Fl S
-sets the border style when the pane is active and
-.Fl R
-sets the border style when the pane is inactive (see
-.Sx STYLES ) .
-.Fl T
-sets the pane title.
-.Pp
-.Fl h
-does a horizontal split and
-.Fl v
-a vertical split; if neither is specified,
-.Fl v
-is assumed.
-The
-.Fl l
-option specifies the size of the new pane in lines (for vertical split) or in
-columns (for horizontal split);
-.Ar size
-may be followed by
-.Ql %
-to specify a percentage of the available space.
-.Fl p
-is a shorthand option for this.
-.Fl B
-sets the pane border lines for floating panes; see
-.Ic pane\-border\-lines .
-The
-.Fl b
-option causes the new pane to be created to the left of or above
-.Ar target\-pane .
-The
-.Fl f
-option creates a new pane spanning the full window height (with
-.Fl h )
-or full window width (with
-.Fl v ) ,
-instead of splitting the active pane.
-.Pp
-If
-.Ar target\-pane
-is floating, a new floating pane is created adjacent to
-.Ar target\-pane
-with equal sizes.
-The position is determined by the
-.Fl h ,
-.Fl v ,
-and
-.Fl b
-flags.
-If any of the new pane would not be visible on the screen,
-.Ar target\-pane
-and the new pane are resized to fit.
-.Pp
-.Fl k
-keeps the pane open after the optional
-.Ar shell\-command
-exits and waits for a key to be pressed before closing it.
-The message shown is controlled by the
-.Ic remain\-on\-exit\-format
-option.
-.Fl m Ar message
-is equivalent to
-.Fl k
-but also sets the
-.Ic remain\-on\-exit\-format
-option for this pane to
-.Ar message .
-.Pp
-.Fl W
-Waits until
-.Ar shell\-command
-exits, then returns its exit status.
-For example:
-.Bd -literal -offset indent
-$ tmux new-pane -W 'vi afile'
-$ echo $?
-0
-.Ed
-.Pp
-.Fl E ,
-or an empty
-.Ar shell\-command ,
-(\[aq]\[aq]) will create an empty pane with no command running in it;
-.Ic display-message
-.Fl I
-can write to an empty pane.
-The
-.Fl I
-flag will create an empty pane and forward any output from stdin to it.
-For example:
-.Bd -literal -offset indent
-$ make 2>&1|tmux new\-pane \-dI &
-.Ed
-.Pp
+.It Xr tmux-select-window 1
+Select a window in the target session.
 .Tg swapp
-.It Xo Ic swap\-pane
-.Op Fl dDUZ
-.Op Fl s Ar src\-pane
-.Op Fl t Ar dst\-pane
-.Xc
-.D1 Pq alias: Ic swapp
-Swap two panes.
-If
-.Fl U
-is used and no source pane is specified with
-.Fl s ,
-.Ar dst\-pane
-is swapped with the previous pane (before it numerically);
-.Fl D
-swaps with the next pane (after it numerically).
-.Fl d
-instructs
-.Nm
-not to change the active pane and
-.Fl Z
-keeps the window zoomed if it was zoomed.
-.Pp
-If
-.Fl s
-is omitted and a marked pane is present (see
-.Ic select\-pane
-.Fl m ) ,
-the marked pane is used rather than the current pane.
+.It Xr tmux-split-window 1
+Split a pane and start a command in the new pane.
 .Tg swapw
-.It Xo Ic swap\-window
-.Op Fl d
-.Op Fl s Ar src\-window
-.Op Fl t Ar dst\-window
-.Xc
-.D1 Pq alias: Ic swapw
-This is similar to
-.Ic link\-window ,
-except the source and destination windows are swapped.
-It is an error if no window exists at
-.Ar src\-window .
-If
-.Fl d
-is given, the new window does not become the current window.
-.Pp
-If
-.Fl s
-is omitted and a marked pane is present (see
-.Ic select\-pane
-.Fl m ) ,
-the window containing the marked pane is used rather than the current window.
+.It Xr tmux-swap-pane 1
+Exchange two panes, optionally moving the active pane's neighbors.
 .Tg unlinkw
-.It Xo Ic unlink\-window
-.Op Fl k
-.Op Fl t Ar target\-window
-.Xc
-.D1 Pq alias: Ic unlinkw
-Unlink
-.Ar target\-window .
-Unless
-.Fl k
-is given, a window may be unlinked only if it is linked to multiple sessions -
-windows may not be linked to no sessions;
-if
-.Fl k
-is specified and the window is linked to only one session, it is unlinked and
-destroyed.
+.It Xr tmux-swap-window 1
+Swap the positions of two windows.
+.It Xr tmux-unlink-window 1
+Remove a window from the current session.
 .El
 .Sh KEY BINDINGS
 .Nm
@@ -4328,210 +2375,19 @@ key will execute for all keys which do not have a more specific binding.
 Commands related to key bindings are as follows:
 .Bl -tag -width Ds
 .Tg bind
-.It Xo Ic bind\-key
-.Op Fl nr
-.Op Fl N Ar note
-.Op Fl T Ar key\-table
-.Ar key
-.Op Ar command Op Ar argument ...
-.Xc
-.D1 Pq alias: Ic bind
-Bind key
-.Ar key
-to
-.Ar command .
-Keys are bound in a key table.
-By default (without \-T), the key is bound in
-the
-.Em prefix
-key table.
-This table is used for keys pressed after the prefix key (for example,
-by default
-.Ql c
-is bound to
-.Ic new\-window
-in the
-.Em prefix
-table, so
-.Ql C\-b c
-creates a new window).
-The
-.Em root
-table is used for keys pressed without the prefix key: binding
-.Ql c
-to
-.Ic new\-window
-in the
-.Em root
-table (not recommended) means a plain
-.Ql c
-will create a new window.
-.Fl n
-is an alias
-for
-.Fl T Ar root .
-Keys may also be bound in custom key tables and the
-.Ic switch\-client
-.Fl T
-command used to switch to them from a key binding.
-The
-.Fl r
-flag indicates this key may repeat, see the
-.Ic initial\-repeat\-time
-and
-.Ic repeat\-time
-options.
-.Fl N
-attaches a note to the key (shown with
-.Ic list\-keys
-.Fl N ) ,
-which can be cleared by passing an empty string.
-The
-.Fl r
-and
-.Fl N
-flags can be used without
-.Ar command
-to alter an existing binding.
-.Pp
-To view the default bindings and possible commands, see the
-.Ic list\-keys
-command.
 .Tg lsk
-.It Xo Ic list\-keys
-.Op Fl 1aNr
-.Op Fl F Ar format
-.Op Fl O Ar sort\-order
-.Op Fl P Ar prefix\-string
-.Op Fl T Ar key\-table
-.Op Ar key
-.Xc
-.D1 Pq alias: Ic lsk
-List key bindings.
-.Fl F
-specifies the format of each line.
-See the
-.Sx FORMATS
-section.
-.Fl T
-specifies a
-.Ar key\-table
-to list from.
-.Fl 1
-lists only the first matching key.
-.Fl O
-specifies the sort order: one of
-.Ql key ,
-.Ql modifier ,
-.Ql name
-(table name).
-.Fl r
-reverses the sort order.
-.Pp
-If no
-.Ar format
-is given, there are two forms: the default lists keys as
-.Ic bind\-key
-commands;
-.Fl N
-lists only keys with attached notes and shows only the key and note for each
-key.
-.Pp
-With the default form, all key tables are listed unless specified otherwise.
-.Pp
-With the
-.Fl N
-form, only keys in the
-.Em root
-and
-.Em prefix
-key tables are listed by default;
-.Fl T
-also lists only keys in
-.Ar key\-table .
-.Fl P
-specifies a prefix to print before each key.
-.Fl a
-lists the command for keys that do not have a note rather than skipping them.
+.It Xr tmux-bind-key 1
+Bind a key to a tmux command.
 .Tg send
-.It Xo Ic send\-keys
-.Op Fl FHKlMRX
-.Op Fl c Ar target\-client
-.Op Fl N Ar repeat\-count
-.Op Fl t Ar target\-pane
-.Op Ar key ...
-.Xc
-.D1 Pq alias: Ic send
-Send a key or keys to a window or client.
-Each argument
-.Ar key
-is the name of the key (such as
-.Ql C\-a
-or
-.Ql NPage )
-to send; if the string is not recognised as a key, it is sent as a series of
-characters.
-If
-.Fl K
-is given, keys are sent to
-.Ar target\-client ,
-so they are looked up in the client's key table, rather than to
-.Ar target\-pane .
-All arguments are sent sequentially from first to last.
-If no keys are given and the command is bound to a key, then that key is used.
-.Pp
-The
-.Fl l
-flag disables key name lookup and processes the keys as literal UTF\-8
-characters.
-The
-.Fl H
-flag expects each key to be a hexadecimal number for an ASCII character.
-.Pp
-The
-.Fl R
-flag causes the terminal state to be reset.
-.Pp
-.Fl M
-passes through a mouse event (only valid if bound to a mouse key binding, see
-.Sx MOUSE SUPPORT ) .
-.Pp
-.Fl X
-is used to send a command into copy mode - see
-the
-.Sx WINDOWS AND PANES
-section.
-.Fl N
-specifies a repeat count and
-.Fl F
-expands formats in arguments where appropriate.
-.It Xo Ic send\-prefix
-.Op Fl 2
-.Op Fl t Ar target\-pane
-.Xc
-Send the prefix key, or with
-.Fl 2
-the secondary prefix key, to a window as if it was pressed.
+.It Xr tmux-list-keys 1
+List key bindings.
+.It Xr tmux-send-keys 1
+Send keys to a pane or client.
 .Tg unbind
-.It Xo Ic unbind\-key
-.Op Fl anq
-.Op Fl T Ar key\-table
-.Ar key
-.Xc
-.D1 Pq alias: Ic unbind
-Unbind the command bound to
-.Ar key .
-.Fl n
-and
-.Fl T
-are the same as for
-.Ic bind\-key .
-If
-.Fl a
-is present, all key bindings are removed.
-The
-.Fl q
-option prevents errors being returned.
+.It Xr tmux-send-prefix 1
+Send the configured prefix key to a pane.
+.It Xr tmux-unbind-key 1
+Remove a key binding or all bindings in a key table.
 .El
 .Sh OPTIONS
 The appearance and behaviour of
@@ -4641,131 +2497,11 @@ abc123
 Options are managed with these commands:
 .Bl -tag -width Ds
 .Tg set
-.It Xo Ic set\-option
-.Op Fl aFgopqsuUw
-.Op Fl t Ar target\-pane
-.Ar option
-.Op Ar value
-.Xc
-.D1 Pq alias: Ic set
-Set a pane option with
-.Fl p ,
-a window option with
-.Fl w ,
-a server option with
-.Fl s ,
-otherwise a session option.
-If the option is not a user option,
-.Fl w
-or
-.Fl s
-may be unnecessary -
-.Nm
-will infer the scope from the option name, assuming
-.Fl w
-for pane options.
-If
-.Fl g
-is given, the global session or window option is set.
-.Pp
-Array options may be set by giving a key in square brackets after the option
-name, for example
-.Ql command-alias[zoom] .
-.Pp
-.Fl F
-expands formats in the option value.
-The
-.Fl u
-flag unsets an option, so a session inherits the option from the global
-options (or with
-.Fl g ,
-restores a global option to the default).
-.Fl U
-unsets an option (like
-.Fl u )
-but if the option is a pane option also unsets the option on any panes in the
-window.
-.Ar value
-depends on the option and its type and can be omitted for flag and choice
-options to toggle its value (choice options toggle between the first two
-choices).
-.Pp
-The
-.Fl o
-flag prevents setting an option that is already set and the
-.Fl q
-flag suppresses errors about unknown or ambiguous options.
-.Pp
-With
-.Fl a ,
-and if the option expects a string or a style,
-.Ar value
-is appended to the existing setting.
-For example:
-.Bd -literal -offset indent
-set \-g status\-left "foo"
-set \-ag status\-left "bar"
-.Ed
-.Pp
-Will result in
-.Ql foobar .
-And:
-.Bd -literal -offset indent
-set \-g status\-style "bg=red"
-set \-ag status\-style "fg=blue"
-.Ed
-.Pp
-Will result in a red background
-.Em and
-blue foreground.
-Without
-.Fl a ,
-the result would be the default background and a blue foreground.
 .Tg show
-.It Xo Ic show\-options
-.Op Fl AgHpqsvw
-.Op Fl F Ar format
-.Op Fl t Ar target\-pane
-.Op Ar option
-.Xc
-.D1 Pq alias: Ic show
-Show the pane options (or a single option if
-.Ar option
-is provided) with
-.Fl p ,
-the window options with
-.Fl w ,
-the server options with
-.Fl s ,
-otherwise the session options.
-If the option is not a user option,
-.Fl w
-or
-.Fl s
-may be unnecessary -
-.Nm
-will infer the scope from the option name, assuming
-.Fl w
-for pane options.
-Global session or window options are listed if
-.Fl g
-is used.
-.Fl v
-shows only the option value, not the name.
-With
-.Fl F ,
-.Ar format
-is used for each option.
-If
-.Fl q
-is set, no error will be returned if
-.Ar option
-is unset.
-.Fl H
-includes hooks (omitted by default).
-.Fl A
-includes options inherited from a parent set of options, such options are
-marked with an asterisk.
+.It Xr tmux-set-option 1
+Set a server, session, window, or pane option.
+.It Xr tmux-show-options 1
+Show session, server, window, or pane options.
 .El
 .Pp
 Available server options are:
@@ -6562,92 +4298,10 @@ Run when a window is unlinked from a session.
 .Pp
 Hooks are managed with these commands:
 .Bl -tag -width Ds
-.It Xo Ic set\-hook
-.Op Fl agpERTuw
-.Op Fl B Ar name:what:format
-.Op Fl t Ar target\-pane
-.Ar hook\-name
-.Op Ar command
-.Xc
-Without
-.Fl E
-or
-.Fl R ,
-sets (or with
-.Fl u
-unsets) hook
-.Ar hook\-name
-to
-.Ar command .
-The flags are the same as for
-.Ic set\-option .
-.Pp
-With
-.Fl B ,
-.Ar name:what:format
-uses the same subscription syntax as
-.Ic refresh\-client
-.Fl B :
-.Ar name
-is the hook to run,
-.Ar what
-selects the session, pane, all panes, window, or all windows, and
-.Ar format
-is expanded once a second.
-With
-.Fl T ,
-the hook is run only when
-.Ar format
-is true.
-For monitor hooks,
-.Ar name
-must begin with
-.Ql @ .
-If
-.Ar command
-is given, it is stored as the
-.Ql @
-hook command; otherwise only the monitor is created or replaced.
-Note that monitor hooks are not inherited, the hook is only run from
-the scope where it is created.
-With
-.Fl u ,
-the subscription named by
-.Fl B
-is removed.
-.Pp
-With
-.Fl E ,
-fire the user event named
-.Ar hook\-name .
-.Ar hook\-name
-must begin with
-.Ql @ .
-.Pp
-With
-.Fl R ,
-run
-.Ar hook\-name
-immediately.
-.It Xo Ic show\-hooks
-.Op Fl Bgpw
-.Op Fl F Ar format
-.Op Fl t Ar target\-pane
-.Op Ar hook
-.Xc
-Shows hooks.
-The flags are the same as for
-.Ic show\-options .
-.Pp
-With
-.Fl B ,
-shows the subscriptions installed with
-.Em set\-hook
-.Fl B .
-With
-.Fl F ,
-.Ar format
-is used for each hook.
+.It Xr tmux-set-hook 1
+Set, unset, or run a hook, monitor subscription, or user event.
+.It Xr tmux-show-hooks 1
+List hooks in a session, window, or pane scope.
 .El
 .Sh MOUSE SUPPORT
 If the
@@ -7857,52 +5511,11 @@ section).
 Commands to alter and view the environment are:
 .Bl -tag -width Ds
 .Tg setenv
-.It Xo Ic set\-environment
-.Op Fl Fhgru
-.Op Fl t Ar target\-session
-.Ar variable Op Ar value
-.Xc
-.D1 Pq alias: Ic setenv
-Set or unset an environment variable.
-If
-.Fl g
-is used, the change is made in the global environment; otherwise, it is applied
-to the session environment for
-.Ar target\-session .
-If
-.Fl F
-is present, then
-.Ar value
-is expanded as a format.
-The
-.Fl u
-flag unsets a variable.
-.Fl r
-indicates the variable is to be removed from the environment before starting a
-new process.
-.Fl h
-marks the variable as hidden.
 .Tg showenv
-.It Xo Ic show\-environment
-.Op Fl hgs
-.Op Fl t Ar target\-session
-.Op Ar variable
-.Xc
-.D1 Pq alias: Ic showenv
-Display the environment for
-.Ar target\-session
-or the global environment with
-.Fl g .
-If
-.Ar variable
-is omitted, all variables are shown.
-Variables removed from the environment are prefixed with
-.Ql \- .
-If
-.Fl s
-is used, the output is formatted as a set of Bourne shell commands.
-.Fl h
-shows hidden variables (omitted by default).
+.It Xr tmux-set-environment 1
+Set, unset, or mark an environment variable for removal.
+.It Xr tmux-show-environment 1
+Display variables in a session or global environment.
 .El
 .Sh STATUS LINE
 .Nm
@@ -7970,380 +5583,22 @@ session option.
 Commands related to the status line are as follows:
 .Bl -tag -width Ds
 .Tg clearphist
-.It Xo Ic clear\-prompt\-history
-.Op Fl T Ar prompt\-type
-.Xc
-.D1 Pq alias: Ic clearphist
-Clear status prompt history for prompt type
-.Ar prompt\-type .
-If
-.Fl T
-is omitted, then clear history for all types.
-See
-.Ic command\-prompt
-for possible values for
-.Ar prompt\-type .
-.It Xo Ic command\-prompt
-.Op Fl 1bCeFiklNP
-.Op Fl I Ar inputs
-.Op Fl p Ar prompts
-.Op Fl t Ar target\-client
-.Op Fl T Ar prompt\-type
-.Op Ar template
-.Xc
-Open the command prompt in a client.
-This may be used from inside
-.Nm
-to execute commands interactively.
-.Pp
-If
-.Ar template
-is specified, it is used as the command.
-With
-.Fl F ,
-.Ar template
-is expanded as a format.
-.Pp
-If
-.Fl I
-is present,
-.Ar inputs
-is a comma-separated list of the initial text for each prompt.
-If
-.Fl p
-is given,
-.Ar prompts
-is a comma-separated list of prompts which are displayed in order; otherwise
-a single prompt is displayed, constructed from
-.Ar template
-if it is present, or
-.Ql \&:
-if not.
-.Fl l
-disables splitting of
-.Ar inputs
-and
-.Ar prompts
-at commas and treats them literally.
-.Pp
-Before the command is executed, the first occurrence of the string
-.Ql %%
-and all occurrences of
-.Ql %1
-are replaced by the response to the first prompt, all
-.Ql %2
-are replaced with the response to the second prompt, and so on for further
-prompts.
-Up to nine prompt responses may be replaced
-.Po
-.Ql %1
-to
-.Ql %9
-.Pc .
-.Ql %%%
-is like
-.Ql %%
-but any quotation marks are escaped.
-.Pp
-.Fl 1
-makes the prompt only accept one key press, in this case the resulting input
-is a single character.
-.Fl k
-is like
-.Fl 1
-but the key press is translated to a key name.
-.Fl N
-makes the prompt only accept numeric key presses.
-If
-.Fl C
-given, panes will continue to be updated while the prompt is displayed.
-.Fl i
-executes the command every time the prompt input changes instead of when the
-user exits the command prompt.
-.Fl e
-makes
-.Em BSpace
-cancel an empty prompt.
-.Fl P
-opens a prompt inside a pane instead of on the status line.
-.Pp
-.Fl T
-tells
-.Nm
-the prompt type.
-This affects what completions are offered when
-.Em Tab
-is pressed.
-Available types are:
-.Ql command ,
-.Ql search .
-.Pp
-The following keys have a special meaning in the command prompt, depending
-on the value of the
-.Ic status\-keys
-option:
-.Bl -column "FunctionXXXXXXXXXXXXXXXXXXXXXXXXX" "viXXXX" "emacsX" -offset indent
-.It Sy "Function" Ta Sy "vi" Ta Sy "emacs"
-.It Li "Cancel command prompt" Ta "q" Ta "Escape"
-.It Li "Delete from cursor to start of word" Ta "" Ta "C\-w"
-.It Li "Delete entire command" Ta "d" Ta "C\-u"
-.It Li "Delete from cursor to end" Ta "D" Ta "C\-k"
-.It Li "Execute command" Ta "Enter" Ta "Enter"
-.It Li "Get next command from history" Ta "" Ta "Down"
-.It Li "Get previous command from history" Ta "" Ta "Up"
-.It Li "Insert top paste buffer" Ta "p" Ta "C\-y"
-.It Li "Look for completions" Ta "Tab" Ta "Tab"
-.It Li "Move cursor left" Ta "h" Ta "Left"
-.It Li "Move cursor right" Ta "l" Ta "Right"
-.It Li "Move cursor to end" Ta "$" Ta "C\-e"
-.It Li "Move cursor to next word" Ta "w" Ta "M\-f"
-.It Li "Move cursor to previous word" Ta "b" Ta "M\-b"
-.It Li "Move cursor to start" Ta "0" Ta "C\-a"
-.It Li "Transpose characters" Ta "" Ta "C\-t"
-.El
-.Pp
-With
-.Fl b ,
-the prompt is shown in the background and the invoking client does not exit
-until it is dismissed.
+.It Xr tmux-clear-prompt-history 1
+Clear status prompt history.
 .Tg confirm
-.It Xo Ic confirm\-before
-.Op Fl by
-.Op Fl c Ar confirm\-key
-.Op Fl p Ar prompt
-.Op Fl t Ar target\-client
-.Ar command
-.Xc
-.D1 Pq alias: Ic confirm
-Ask for confirmation before executing
-.Ar command .
-If
-.Fl p
-is given,
-.Ar prompt
-is the prompt to display; otherwise a prompt is constructed from
-.Ar command .
-It may contain the special character sequences supported by the
-.Ic status\-left
-option.
-With
-.Fl b ,
-the prompt is shown in the background and the invoking client does not exit
-until it is dismissed.
-.Fl y
-changes the default behaviour (if Enter alone is pressed) of the prompt to
-run the command.
-.Fl c
-changes the confirmation key to
-.Ar confirm\-key ;
-the default is
-.Ql y .
+.It Xr tmux-command-prompt 1
+Open a prompt in a client to run a command interactively.
 .Tg menu
-.It Xo Ic display\-menu
-.Op Fl OM
-.Op Fl b Ar border\-lines
-.Op Fl c Ar target\-client
-.Op Fl C Ar starting\-choice
-.Op Fl H Ar selected\-style
-.Op Fl s Ar style
-.Op Fl S Ar border\-style
-.Op Fl t Ar target\-pane
-.Op Fl T Ar title
-.Op Fl x Ar position
-.Op Fl y Ar position
-.Ar name
-.Ar key
-.Ar command
-.Op Ar name key command ...
-.Xc
-.D1 Pq alias: Ic menu
-Display a menu on
-.Ar target\-client .
-.Ar target\-pane
-gives the target for any commands run from the menu.
-.Pp
-A menu is passed as a series of arguments: first the menu item name,
-second the key shortcut (or empty for none) and third the command
-to run when the menu item is chosen.
-The name and command are formats, see the
-.Sx FORMATS
-and
-.Sx STYLES
-sections.
-If the name begins with a hyphen (\-), then the item is disabled (shown dim) and
-may not be chosen.
-The name may be empty for a separator line, in which case both the key and
-command should be omitted.
-.Pp
-.Fl b
-sets the type of characters used for drawing menu borders.
-.Ar border\-lines
-may be one of
-.Ic single ,
-.Ic rounded ,
-.Ic double ,
-.Ic heavy ,
-.Ic simple ,
-.Ic padded ,
-or
-.Ic none .
-.Pp
-.Fl H
-sets the style for the selected menu item (see
-.Sx STYLES ) .
-.Pp
-.Fl s
-sets the style for the menu and
-.Fl S
-sets the style for the menu border (see
-.Sx STYLES ) .
-.Pp
-.Fl T
-is a format for the menu title (see
-.Sx FORMATS ) .
-.Pp
-.Fl C
-sets the menu item selected by default, if the menu is not bound to a mouse key
-binding.
-.Pp
-.Fl x
-and
-.Fl y
-give the position of the menu.
-Both may be a row or column number, or one of the following special values:
-.Bl -column "XXXXX" "XXXX" -offset indent
-.It Sy "Value" Ta Sy "Flag" Ta Sy "Meaning"
-.It Li "C" Ta "Both" Ta "The centre of the terminal"
-.It Li "R" Ta Fl x Ta "The right side of the terminal"
-.It Li "P" Ta "Both" Ta "The bottom left of the pane"
-.It Li "M" Ta "Both" Ta "The mouse position"
-.It Li "L" Ta "Both" Ta "The position of the last menu"
-.It Li "W" Ta "Both" Ta "The window position on the status line"
-.It Li "S" Ta Fl y Ta "The line above or below the status line"
-.El
-.Pp
-Or a format, which is expanded with the following additional variables.
-The
-.Ql popup_
-prefix is retained for compatibility:
-.Bl -column "XXXXXXXXXXXXXXXXXXXXXXXXXX" -offset indent
-.It Sy "Variable name" Ta Sy "Replaced with"
-.It Li "popup_centre_x" Ta "Centered in the window"
-.It Li "popup_centre_y" Ta "Centered in the window"
-.It Li "popup_height" Ta "Height of the menu"
-.It Li "popup_last_x" Ta "Left of the last menu"
-.It Li "popup_last_y" Ta "Bottom of the last menu"
-.It Li "popup_mouse_bottom" Ta "Bottom at the mouse"
-.It Li "popup_mouse_centre_x" Ta "Horizontal centre at the mouse"
-.It Li "popup_mouse_centre_y" Ta "Vertical centre at the mouse"
-.It Li "popup_mouse_top" Ta "Top at the mouse"
-.It Li "popup_mouse_x" Ta "Mouse X position"
-.It Li "popup_mouse_y" Ta "Mouse Y position"
-.It Li "popup_pane_bottom" Ta "Bottom of the pane"
-.It Li "popup_pane_left" Ta "Left of the pane"
-.It Li "popup_pane_right" Ta "Right of the pane"
-.It Li "popup_pane_top" Ta "Top of the pane"
-.It Li "popup_status_line_y" Ta "Above or below the status line"
-.It Li "popup_width" Ta "Width of the menu"
-.It Li "popup_window_status_line_x" Ta "At the window position in status line"
-.It Li "popup_window_status_line_y" Ta "At the status line showing the window"
-.El
-.Pp
-Each menu consists of items followed by a key shortcut shown in brackets.
-If the menu is too large to fit on the terminal, it is not displayed.
-Pressing the key shortcut chooses the corresponding item.
-If the mouse is enabled and the menu is opened from a mouse key binding,
-releasing the mouse button with an item selected chooses that item and
-releasing the mouse button without an item selected closes the menu.
-.Fl O
-changes this behaviour so that the menu does not close when the mouse button is
-released without an item selected the menu is not closed and a mouse button
-must be clicked to choose an item.
-.Pp
-.Fl M
-tells
-.Nm
-the menu should handle mouse events; by default only menus opened from mouse
-key bindings do so.
-.Pp
-The following keys are available in menus:
-.Bl -column "Key" "Function" -offset indent
-.It Sy "Key" Ta Sy "Function"
-.It Li "Enter" Ta "Choose selected item"
-.It Li "Up" Ta "Select previous item"
-.It Li "Down" Ta "Select next item"
-.It Li "q" Ta "Exit menu"
-.El
+.It Xr tmux-confirm-before 1
+Ask before running a command.
 .Tg display
-.It Xo Ic display\-message
-.Op Fl aCIjlNpv
-.Op Fl c Ar target\-client
-.Op Fl d Ar delay
-.Op Fl t Ar target\-pane
-.Op Ar message
-.Xc
-.D1 Pq alias: Ic display
-Display a message.
-If
-.Fl p
-is given, the output is printed to stdout, otherwise it is displayed in the
-.Ar target\-client
-status line for up to
-.Ar delay
-milliseconds.
-If
-.Ar delay
-is not given, the
-.Ic display\-time
-option is used; a delay of zero waits for a key press.
-.Fl N
-ignores key presses and closes only after the delay expires.
-If
-.Fl C
-is given, the pane will continue to be updated while the message is displayed.
-If
-.Fl l
-is given,
-.Ar message
-is printed unchanged.
-Otherwise, the format of
-.Ar message
-is described in the
-.Sx FORMATS
-section; information is taken from
-.Ar target\-pane
-if
-.Fl t
-is given, otherwise the active pane.
-.Pp
-If
-.Fl j
-is given,
-.Ar message
-is parsed as JSON and printed.
-.Pp
-.Fl v
-prints verbose logging as the format is parsed and
-.Fl a
-lists the format variables and their values.
-.Pp
-.Fl I
-forwards any input read from stdin to the empty pane given by
-.Ar target\-pane .
+.It Xr tmux-display-menu 1
+Display an interactive menu on a client.
 .Tg showphist
-.It Xo Ic show\-prompt\-history
-.Op Fl T Ar prompt\-type
-.Xc
-.D1 Pq alias: Ic showphist
-Display status prompt history for prompt type
-.Ar prompt\-type .
-If
-.Fl T
-is omitted, then show history for all types.
-See
-.Ic command\-prompt
-for possible values for
-.Ar prompt\-type .
+.It Xr tmux-display-message 1
+Display a message in the status line or print it as command output.
+.It Xr tmux-show-prompt-history 1
+Display status prompt history.
 .El
 .Sh BUFFERS
 .Nm
@@ -8391,379 +5646,50 @@ command above).
 .Pp
 The buffer commands are as follows:
 .Bl -tag -width Ds
-.It Xo
-.Ic choose\-buffer
-.Op Fl kNryZ
-.Op Fl F Ar format
-.Op Fl f Ar filter
-.Op Fl K Ar key\-format
-.Op Fl O Ar sort\-order
-.Op Fl t Ar target\-pane
-.Op Ar template
-.Xc
-Put a pane into buffer mode, where a buffer may be chosen interactively from
-a list.
-Each buffer is shown on one line.
-A shortcut key is shown on the left in brackets allowing for immediate choice,
-or the list may be navigated and an item chosen or otherwise manipulated using
-the keys below.
-.Fl Z
-zooms the pane.
-.Fl y
-disables any confirmation prompts.
-The following keys may be used in buffer mode:
-.Bl -column "KeyXXXXXX" "Function" -offset indent
-.It Sy "Key" Ta Sy "Function"
-.It Li "Enter" Ta "Paste selected buffer"
-.It Li "Up" Ta "Select previous buffer"
-.It Li "Down" Ta "Select next buffer"
-.It Li "C\-s" Ta "Search by name or content"
-.It Li "n" Ta "Repeat last search forwards"
-.It Li "N" Ta "Repeat last search backwards"
-.It Li "t" Ta "Toggle if buffer is tagged"
-.It Li "T" Ta "Tag no buffers"
-.It Li "C\-t" Ta "Tag all buffers"
-.It Li "p" Ta "Paste selected buffer"
-.It Li "P" Ta "Paste tagged buffers"
-.It Li "d" Ta "Delete selected buffer"
-.It Li "D" Ta "Delete tagged buffers"
-.It Li "e" Ta "Open the buffer in an editor"
-.It Li "f" Ta "Enter a format to filter items"
-.It Li "c" Ta "Clear the current filter"
-.It Li "O" Ta "Change sort order"
-.It Li "r" Ta "Reverse sort order"
-.It Li "v" Ta "Toggle preview"
-.It Li "F1 or C\-h" Ta "Display help"
-.It Li "q" Ta "Exit mode"
-.El
-.Pp
-After a buffer is chosen,
-.Ql %%
-is replaced by the buffer name in
-.Ar template
-and the result executed as a command.
-If
-.Ar template
-is not given, "paste\-buffer \-p \-b \[aq]%%\[aq]" is used.
-.Pp
-.Fl O
-specifies the initial sort order: one of
-.Ql creation
-(time),
-.Ql name ,
-or
-.Ql size .
-.Fl r
-reverses the sort order.
-.Fl f
-specifies an initial filter: the filter is a format - if it evaluates to zero,
-the item in the list is not shown, otherwise it is shown.
-If a filter would lead to an empty list, it is ignored.
-.Fl F
-specifies the format for each item in the list and
-.Fl K
-a format for each shortcut key; both are evaluated once for each line.
-.Fl N
-starts without the preview.
-.Fl k
-kills the pane when the mode is exited.
-The
-.Ic choose-buffer
-command works only if at least one client is attached.
 .Tg clearhist
-.It Xo Ic clear\-history
-.Op Fl H
-.Op Fl t Ar target\-pane
-.Xc
-.D1 Pq alias: Ic clearhist
-Remove and free the history for the specified pane.
-.Fl H
-also removes all hyperlinks.
+.It Xr tmux-choose-buffer 1
+Choose a paste buffer interactively from a list.
 .Tg deleteb
-.It Ic delete\-buffer Op Fl b Ar buffer\-name
-.D1 Pq alias: Ic deleteb
-Delete the buffer named
-.Ar buffer\-name ,
-or the most recently added automatically named buffer if not specified.
+.It Xr tmux-clear-history 1
+Remove and free the history for a pane.
 .Tg lsb
-.It Xo Ic list\-buffers
-.Op Fl r
-.Op Fl F Ar format
-.Op Fl f Ar filter
-.Op Fl O Ar sort\-order
-.Xc
-.D1 Pq alias: Ic lsb
-List the global buffers.
-.Fl F
-specifies the format of each line and
-.Fl f
-a filter.
-Only buffers for which the filter is true are shown.
-See the
-.Sx FORMATS
-section.
-.Fl O
-specifies the sort order: one of
-.Ql name ,
-.Ql size ,
-or
-.Ql creation
-(time).
-.Fl r
-reverses the sort order.
-.It Xo Ic load\-buffer
-.Op Fl w
-.Op Fl b Ar buffer\-name
-.Op Fl t Ar target\-client
-.Ar path
-.Xc
+.It Xr tmux-delete-buffer 1
+Delete a paste buffer.
+.It Xr tmux-list-buffers 1
+List the server's paste buffers.
 .Tg loadb
-.D1 Pq alias: Ic loadb
-Load the contents of the specified paste buffer from
-.Ar path .
-If
-.Fl w
-is given, the buffer is also sent to the clipboard for
-.Ar target\-client
-using the
-.Xr xterm 1
-escape sequence, if possible.
-If
-.Ar path
-is
-.Ql \- ,
-the contents are read from stdin.
 .Tg pasteb
-.It Xo Ic paste\-buffer
-.Op Fl dprS
-.Op Fl b Ar buffer\-name
-.Op Fl s Ar separator
-.Op Fl t Ar target\-pane
-.Xc
-.D1 Pq alias: Ic pasteb
-Insert the contents of a paste buffer into the specified pane.
-If not specified, paste into the current one.
-By default, control characters are sanitized with
-.Xr vis 3 ;
-.Fl S
-disables this.
-With
-.Fl d ,
-also delete the paste buffer.
-.Pp
-When output, any linefeed (LF) characters in the paste buffer are replaced with
-a separator, by default carriage return (CR).
-A custom separator may be specified using the
-.Fl s
-flag.
-The
-.Fl r
-flag means to do no replacement (equivalent to a separator of LF).
-If
-.Fl p
-is specified, paste bracket control codes are inserted around the
-buffer if the application has requested bracketed paste mode.
+.It Xr tmux-load-buffer 1
+Load a file into a paste buffer.
 .Tg saveb
-.It Xo Ic save\-buffer
-.Op Fl a
-.Op Fl b Ar buffer\-name
-.Ar path
-.Xc
-.D1 Pq alias: Ic saveb
-Save the contents of the specified paste buffer to
-.Ar path .
-The
-.Fl a
-option appends to rather than overwriting the file.
-If
-.Ar path
-is
-.Ql \- ,
-the contents are written to stdout.
-.It Xo Ic set\-buffer
-.Op Fl aw
-.Op Fl b Ar buffer\-name
-.Op Fl t Ar target\-client
+.It Xr tmux-paste-buffer 1
+Insert a paste buffer into a pane.
+.It Xr tmux-save-buffer 1
+Save a paste buffer to a file.
 .Tg setb
-.Op Fl n Ar new\-buffer\-name
-.Ar data
-.Xc
-.D1 Pq alias: Ic setb
-Set the contents of the specified buffer to
-.Ar data .
-If
-.Fl w
-is given, the buffer is also sent to the clipboard for
-.Ar target\-client
-using the
-.Xr xterm 1
-escape sequence, if possible.
-The
-.Fl a
-option appends to rather than overwriting the buffer.
-The
-.Fl n
-option renames the buffer to
-.Ar new\-buffer\-name .
 .Tg showb
-.It Xo Ic show\-buffer
-.Op Fl b Ar buffer\-name
-.Xc
-.D1 Pq alias: Ic showb
-Display the contents of the specified buffer.
+.It Xr tmux-set-buffer 1
+Set or append the contents of a paste buffer, or rename a buffer.
+.It Xr tmux-show-buffer 1
+Display the contents of a paste buffer.
 .El
 .Sh MISCELLANEOUS
 Miscellaneous commands are as follows:
 .Bl -tag -width Ds
-.It Ic clock\-mode Op Fl t Ar target\-pane
-Display a large clock.
 .Tg if
-.It Xo Ic if\-shell
-.Op Fl bF
-.Op Fl t Ar target\-pane
-.Ar shell\-command command
-.Op Ar command
-.Xc
-.D1 Pq alias: Ic if
-Execute the first
-.Ar command
-if
-.Ar shell\-command
-(run with
-.Pa /bin/sh )
-returns success or the second
-.Ar command
-otherwise.
-Before being executed,
-.Ar shell\-command
-is expanded using the rules specified in the
-.Sx FORMATS
-section, including those relevant to
-.Ar target\-pane .
-With
-.Fl b ,
-.Ar shell\-command
-is run in the background.
-.Pp
-If
-.Fl F
-is given,
-.Ar shell\-command
-is not executed but considered success if neither empty nor zero (after formats
-are expanded).
+.It Xr tmux-clock-mode 1
+Display a large clock in the target pane.
 .Tg lock
-.It Ic lock\-server
-.D1 Pq alias: Ic lock
-Lock each client individually by running the command specified by the
-.Ic lock\-command
-option.
+.It Xr tmux-if-shell 1
+Run a tmux command according to a shell command's result.
 .Tg run
-.It Xo Ic run\-shell
-.Op Fl bCE
-.Op Fl c Ar start\-directory
-.Op Fl d Ar delay
-.Op Fl t Ar target\-pane
-.Op Ar shell\-command Op Ar argument ...
-.Xc
-.D1 Pq alias: Ic run
-Execute
-.Ar shell\-command
-using
-.Pa /bin/sh
-or (with
-.Fl C )
-a
-.Nm
-command in the background without creating a window.
-Before being executed,
-.Ar shell\-command
-is expanded using the rules specified in the
-.Sx FORMATS
-section.
-If
-.Ar argument
-values are given, they are available as
-.Ql #{1} ,
-.Ql #{2}
-and so on.
-For example:
-.Bd -literal -offset indent
-run-shell 'myscript.sh #{1} #{2}' foo bar
-.Ed
-.Pp
-With
-.Fl b ,
-the command is run in the background.
-.Fl d
-waits for
-.Ar delay
-seconds before starting the command.
-.Fl E
-redirects the command's stderr to stdout instead of ignoring it.
-If
-.Fl c
-is given, the current working directory is set to
-.Ar start\-directory .
-If
-.Fl C
-is not given, any output to stdout is displayed in view mode (in the pane
-specified by
-.Fl t
-or the current pane if omitted) after the command finishes.
-If the command fails, the exit status is also displayed.
+.It Xr tmux-lock-server 1
+Lock every client connected to the server.
 .Tg wait
-.It Xo Ic wait\-for
-.Op Fl ELSUlv
-.Op Fl F Ar format
-.Op Fl w Ar waiter
-.Ar name
-.Xc
-.D1 Pq alias: Ic wait
-When used without options, prevents the client from exiting until woken using
-.Ic wait\-for
-.Fl S
-with the same channel.
-When
-.Fl L
-is used, the channel is locked and any clients that try to lock the same
-channel are made to wait until the channel is unlocked with
-.Ic wait\-for
-.Fl U .
-.Pp
-With
-.Fl E ,
-.Nm
-waits for the next event with
-.Ar name .
-Events include hook and notification names, and user
-.Ql @
-events generated by
-.Ic set-hook
-.Fl E
-or
-.Ic set-hook
-.Fl B .
-If
-.Fl F
-is given,
-.Ar format
-must also be true.
-If
-.Fl v
-is given, event payload keys are printed (whether or not
-.Ar format
-is true).
-.Pp
-.Fl l
-list the waiters for
-.Ar name
-and
-.Fl w
-wakes
-.Ar waiter
-on
-.Ar name
-immediately.
+.It Xr tmux-run-shell 1
+Run a shell command or tmux command without creating a window.
+.It Xr tmux-wait-for 1
+Wait on or signal a named channel or event.
 .El
 .Sh EXIT MESSAGES
 When a

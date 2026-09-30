@@ -14,6 +14,8 @@ Makefile.in
 aclocal.m4
 autom4te.cache/
 cmd-parse.c
+command-help.c
+command-man/
 compat/.dirstamp
 config.log
 config.status

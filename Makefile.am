@@ -1,11 +1,14 @@
 # Obvious program stuff.
 bin_PROGRAMS = tmux
-CLEANFILES = tmux.1.mdoc tmux.1.man cmd-parse.c
+CLEANFILES = tmux.1.mdoc tmux.1.man cmd-parse.c command-help.c
+BUILT_SOURCES = command-help.c
 
 # Distribution tarball options.
 EXTRA_DIST = \
 	CHANGES README COPYING example_tmux.conf \
-	osdep-*.c mdoc2man.awk tmux.1
+	osdep-*.c mdoc2man.awk tmux.1 tools/gen-command-docs.py \
+	tools/check-command-docs.py \
+	$(wildcard docs/commands/*.md)
 dist_EXTRA_tmux_SOURCES = compat/*.[ch]
 
 # Preprocessor flags.
@@ -157,6 +160,7 @@ dist_tmux_SOURCES = \
 	cmd-switch-client.c \
 	cmd-unbind-key.c \
 	cmd-wait-for.c \
+	command-help-style.c \
 	cmd.c \
 	colour.c \
 	compat.h \
@@ -232,7 +236,7 @@ dist_tmux_SOURCES = \
 	window.c \
 	xmalloc.c \
 	xmalloc.h
-nodist_tmux_SOURCES = osdep-@PLATFORM@.c
+nodist_tmux_SOURCES = osdep-@PLATFORM@.c command-help.c
 
 # Add compat file for forkpty.
 if NEED_FORKPTY
@@ -277,7 +281,26 @@ fuzz_json_fuzzer_LDFLAGS = $(FUZZING_LIBS)
 fuzz_json_fuzzer_LDADD = $(LDADD) $(tmux_OBJECTS)
 endif
 
-# Install tmux.1 in the right format.
+command-help.c: $(srcdir)/tools/gen-command-docs.py $(wildcard $(srcdir)/docs/commands/*.md)
+	$(PYTHON3) $(srcdir)/tools/gen-command-docs.py \
+	    --docs $(srcdir)/docs/commands --check-all --c-output $@
+
+.PHONY: command-man
+command-man: command-help.c
+	$(PYTHON3) $(srcdir)/tools/gen-command-docs.py \
+	    --docs $(srcdir)/docs/commands --check-all \
+	    --man-dir $(builddir)/command-man
+
+all-local: command-man
+
+clean-local:
+	rm -rf $(builddir)/command-man
+
+check-local: tmux
+	$(PYTHON3) $(srcdir)/tools/check-command-docs.py \
+	    --binary $(abs_builddir)/tmux
+
+# Install tmux and command man pages in the right format.
 install-exec-hook:
 	if test x@MANFORMAT@ = xmdoc; then \
 		sed -e "s|@SYSCONFDIR@|$(sysconfdir)|g" $(srcdir)/tmux.1 \
@@ -289,7 +312,23 @@ install-exec-hook:
 	$(mkdir_p) $(DESTDIR)$(mandir)/man1
 	$(INSTALL_DATA) $(srcdir)/tmux.1.@MANFORMAT@ \
 		$(DESTDIR)$(mandir)/man1/tmux.1
+	$(PYTHON3) $(srcdir)/tools/gen-command-docs.py \
+	    --docs $(srcdir)/docs/commands --check-all \
+	    --man-dir $(builddir)/command-man
+	for page in $(builddir)/command-man/*.1; do \
+		name=`basename $$page .1`; \
+		if test x@MANFORMAT@ = xmdoc; then \
+			$(INSTALL_DATA) $$page $(DESTDIR)$(mandir)/man1/$$name.1; \
+		else \
+			$(AWK) -f $(srcdir)/mdoc2man.awk $$page >$$page.man; \
+			$(INSTALL_DATA) $$page.man $(DESTDIR)$(mandir)/man1/$$name.1; \
+		fi; \
+	done
 
 # And uninstall it.
 uninstall-hook:
 	rm -f $(DESTDIR)$(mandir)/man1/tmux.1
+	for doc in $(wildcard $(srcdir)/docs/commands/*.md); do \
+		name=`basename $$doc .md`; \
+		rm -f $(DESTDIR)$(mandir)/man1/tmux-$$name.1; \
+	done

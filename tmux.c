@@ -44,6 +44,7 @@ int		 ptm_fd = -1;
 const char	*shell_command;
 
 static __dead void	 usage(int);
+static int		 help_from_argv(int, char **);
 static char		*make_label(const char *, char **);
 
 static int		 areshell(const char *);
@@ -75,6 +76,51 @@ usage(int status)
 	    "            [-S socket-path] [-T features] [command [flags]]\n",
 	    getprogname());
 	exit(status);
+}
+
+static int
+help_from_argv(int argc, char **argv)
+{
+	int	 i;
+
+	for (i = 1; i < argc; i++) {
+		if (strcmp(argv[i], "--help") == 0)
+			break;
+		if (argv[i][0] != '-' || argv[i][1] == '\0')
+			break;
+		if (argv[i][2] == '\0' && strchr("cfLST", argv[i][1]) != NULL)
+			i++;
+	}
+	if (i == argc)
+		return (-1);
+	if (strcmp(argv[i], "--help") != 0) {
+		if (i + 1 < argc && strcmp(argv[i + 1], "--help") == 0)
+			return (cmd_help(argv[i]));
+		return (-1);
+	}
+
+	cmd_help_print("tmux - terminal multiplexer\n\n"
+	    "USAGE\n"
+	    "  tmux [OPTIONS] [COMMAND [FLAGS]]\n"
+	    "  tmux COMMAND --help\n\n"
+	    "OPTIONS\n"
+	    "  -2                  Assume the terminal supports 256 colours.\n"
+	    "  -C                  Start in control mode.\n"
+	    "  -D                  Do not start the server as a daemon.\n"
+	    "  -c shell-command    Execute a shell command.\n"
+	    "  -f file             Use an alternative configuration file.\n"
+	    "  -h                  Print brief usage information.\n"
+	    "  -L socket-name      Use a named server socket.\n"
+	    "  -l                  Behave as a login shell.\n"
+	    "  -N                  Do not start the server.\n"
+	    "  -S socket-path      Use an alternative server socket path.\n"
+	    "  -T features         Set terminal features.\n"
+	    "  -u                  Force UTF-8 output.\n"
+	    "  -V                  Print the tmux version.\n"
+	    "  -v                  Increase logging verbosity.\n\n"
+	    "Use 'tmux COMMAND --help' for command-specific help.\n"
+	    "See also: man tmux(1)\n");
+	return (0);
 }
 
 static const char *
@@ -441,6 +487,10 @@ main(int argc, char **argv)
 	uint64_t				 flags = 0;
 	const struct options_table_entry	*oe;
 	u_int					 i;
+	int					 help_status;
+
+	if ((help_status = help_from_argv(argc, argv)) != -1)
+		exit(help_status);
 
 	if (setlocale(LC_CTYPE, "en_US.UTF-8") == NULL &&
 	    setlocale(LC_CTYPE, "C.UTF-8") == NULL) {
