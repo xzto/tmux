@@ -7,7 +7,7 @@ BUILT_SOURCES = command-help.c
 EXTRA_DIST = \
 	CHANGES README COPYING example_tmux.conf \
 	osdep-*.c mdoc2man.awk tmux.1 tools/gen-command-docs.py \
-	tools/check-command-docs.py \
+	tools/check-command-docs.py docs/command-docs.md \
 	$(wildcard docs/commands/*.md)
 dist_EXTRA_tmux_SOURCES = compat/*.[ch]
 
