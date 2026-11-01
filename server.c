@@ -34,6 +34,7 @@
 #include <unistd.h>
 
 #include "tmux.h"
+#include "restart.h"
 
 /*
  * Main server functions.
@@ -204,8 +205,8 @@ server_start(struct tmuxproc *client, uint64_t flags, struct event_base *base,
 
 	if (log_get_level() > 1)
 		tty_create_log();
-	if (pledge("stdio rpath wpath cpath fattr unix getpw recvfd proc exec "
-	    "tty ps", NULL) != 0)
+	if (pledge("stdio rpath wpath cpath fattr unix getpw sendfd recvfd "
+	    "proc exec tty ps", NULL) != 0)
 		fatal("pledge failed");
 
 	input_key_build();
@@ -267,6 +268,60 @@ server_start(struct tmuxproc *client, uint64_t flags, struct event_base *base,
 	exit(0);
 }
 
+int
+server_restart_fd(void)
+{
+	return (server_fd);
+}
+
+uint64_t
+server_restart_flags(void)
+{
+	return (server_client_flags);
+}
+
+void
+server_restart_init(void)
+{
+	server_proc = proc_start("server");
+	proc_set_signals(server_proc, server_signal);
+	if (log_get_level() > 1)
+		tty_create_log();
+	if (pledge("stdio rpath wpath cpath fattr unix getpw sendfd recvfd "
+	    "proc exec tty ps", NULL) != 0)
+		fatal("pledge failed");
+	input_key_build();
+	utf8_update_width_cache();
+	RB_INIT(&windows);
+	RB_INIT(&all_window_panes);
+	TAILQ_INIT(&clients);
+	RB_INIT(&sessions);
+	control_build_events();
+	hooks_build_events();
+	TAILQ_INIT(&message_log);
+	server_acl_init();
+}
+
+void
+server_restart_loop(int fd, uint64_t flags)
+{
+	struct timeval tv = { .tv_sec = 3600 };
+
+	server_fd = fd;
+	server_client_flags = flags;
+	evtimer_set(&server_ev_tidy, server_tidy_event, NULL);
+	evtimer_add(&server_ev_tidy, &tv);
+	server_add_accept(0);
+	server_update_socket();
+	/* SIGCHLD may have arrived before the new signal handlers existed. */
+	server_child_signal();
+	if (!server_loop())
+		proc_loop(server_proc, server_loop);
+	job_kill_all();
+	prompt_save_history();
+	exit(0);
+}
+
 /* Server loop callback. */
 static int
 server_loop(void)
@@ -288,6 +343,8 @@ server_loop(void)
 
 	server_client_loop();
 
+	if (restart_pending() && !server_exit)
+		return (0);
 	if (!options_get_number(global_options, "exit-empty") && !server_exit)
 		return (0);
 

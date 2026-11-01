@@ -28,6 +28,7 @@
 #include <unistd.h>
 
 #include "tmux.h"
+#include "restart.h"
 
 static void	server_client_free(int, short, void *);
 static void	server_client_check_pane_resize(struct window_pane *);
@@ -378,6 +379,7 @@ server_client_set_session(struct client *c, struct session *s)
 	else if (s == NULL)
 		c->last_session = NULL;
 	c->session = s;
+	restart_client_attached(c);
 	c->flags |= CLIENT_FOCUSED;
 
 	if (old == NULL && s != NULL && (c->tty.flags & TTY_OPENED)) {

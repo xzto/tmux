@@ -37,6 +37,7 @@
 #endif
 
 #include "tmux.h"
+#include "restart.h"
 
 struct tmuxproc {
 	const char	 *name;
@@ -393,6 +394,12 @@ proc_fork_and_daemon(int *fd)
 		*fd = pair[0];
 		return (pid);
 	}
+}
+
+int
+proc_peer_fd(struct tmuxpeer *peer)
+{
+	return (peer->ibuf.fd);
 }
 
 uid_t

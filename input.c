@@ -28,6 +28,7 @@
 #include <unistd.h>
 
 #include "tmux.h"
+#include "restart.h"
 
 /*
  * Based on the description by Paul Williams at:
@@ -840,6 +841,140 @@ input_start_ground_timer(struct input_ctx *ictx)
 	struct timeval	tv = { .tv_sec = 5, .tv_usec = 0 };
 
 	event_add(&ictx->ground_timer, &tv);
+}
+
+int
+restart_input_ready(struct input_ctx *ictx)
+{
+	if (ictx == NULL)
+		return (1);
+#ifdef ENABLE_IMAGES
+	if (ictx->kitty_state != NULL)
+		return (0);
+#endif
+	return (ictx->request_count == 0);
+}
+
+void
+restart_save_input(struct restart *r, struct input_ctx *ictx)
+{
+	u_int i;
+
+	restart_put_number(r, sizeof(struct input_cell));
+	restart_put_string(r, ictx->state->name);
+	restart_write(r, &ictx->cell, sizeof ictx->cell);
+	restart_write(r, &ictx->old_cell, sizeof ictx->old_cell);
+	restart_write(r, &ictx->old_cx, sizeof ictx->old_cx);
+	restart_write(r, &ictx->old_cy, sizeof ictx->old_cy);
+	restart_write(r, &ictx->old_mode, sizeof ictx->old_mode);
+	restart_write(r, &ictx->interm_buf, sizeof ictx->interm_buf);
+	restart_write(r, &ictx->interm_len, sizeof ictx->interm_len);
+	restart_write(r, &ictx->param_buf, sizeof ictx->param_buf);
+	restart_write(r, &ictx->param_len, sizeof ictx->param_len);
+	restart_write(r, &ictx->input_end, sizeof ictx->input_end);
+	restart_write(r, &ictx->utf8data, sizeof ictx->utf8data);
+	restart_write(r, &ictx->utf8started, sizeof ictx->utf8started);
+	restart_write(r, &ictx->ch, sizeof ictx->ch);
+	restart_write(r, &ictx->last, sizeof ictx->last);
+	restart_write(r, &ictx->flags, sizeof ictx->flags);
+	restart_put_number(r, ictx->input_len);
+	restart_write(r, ictx->input_buf, ictx->input_len);
+	restart_put_number(r, ictx->param_list_len);
+	for (i = 0; i < ictx->param_list_len; i++) {
+		restart_put_number(r, ictx->param_list[i].type);
+		if (ictx->param_list[i].type == INPUT_STRING)
+			restart_put_string(r, ictx->param_list[i].str);
+		else
+			restart_put_number(r, ictx->param_list[i].num);
+	}
+	restart_put_number(r, EVBUFFER_LENGTH(ictx->since_ground));
+	restart_write(r, EVBUFFER_DATA(ictx->since_ground),
+	    EVBUFFER_LENGTH(ictx->since_ground));
+}
+
+void
+restart_load_input(struct restart *r, struct input_ctx *ictx)
+{
+	static const struct input_state *states[] = {
+		&input_state_ground,
+		&input_state_esc_enter,
+		&input_state_esc_intermediate,
+		&input_state_csi_enter,
+		&input_state_csi_parameter,
+		&input_state_csi_intermediate,
+		&input_state_csi_ignore,
+		&input_state_dcs_enter,
+		&input_state_dcs_parameter,
+		&input_state_dcs_intermediate,
+		&input_state_dcs_handler,
+		&input_state_dcs_escape,
+		&input_state_dcs_ignore,
+		&input_state_osc_string,
+		&input_state_apc_string,
+		&input_state_rename_string,
+		&input_state_consume_st,
+	};
+	char *name, *data;
+	int64_t size;
+	u_int i;
+
+	if (restart_get_number(r) != sizeof(struct input_cell))
+		fatalx("incompatible restart input cell");
+	name = restart_get_string(r);
+	for (i = 0; i < nitems(states); i++) {
+		if (strcmp(name, states[i]->name) == 0)
+			break;
+	}
+	free(name);
+	if (i == nitems(states))
+		fatalx("unknown restart parser state");
+	ictx->state = states[i];
+	restart_read(r, &ictx->cell, sizeof ictx->cell);
+	restart_read(r, &ictx->old_cell, sizeof ictx->old_cell);
+	restart_read(r, &ictx->old_cx, sizeof ictx->old_cx);
+	restart_read(r, &ictx->old_cy, sizeof ictx->old_cy);
+	restart_read(r, &ictx->old_mode, sizeof ictx->old_mode);
+	restart_read(r, &ictx->interm_buf, sizeof ictx->interm_buf);
+	restart_read(r, &ictx->interm_len, sizeof ictx->interm_len);
+	restart_read(r, &ictx->param_buf, sizeof ictx->param_buf);
+	restart_read(r, &ictx->param_len, sizeof ictx->param_len);
+	restart_read(r, &ictx->input_end, sizeof ictx->input_end);
+	restart_read(r, &ictx->utf8data, sizeof ictx->utf8data);
+	restart_read(r, &ictx->utf8started, sizeof ictx->utf8started);
+	restart_read(r, &ictx->ch, sizeof ictx->ch);
+	restart_read(r, &ictx->last, sizeof ictx->last);
+	restart_read(r, &ictx->flags, sizeof ictx->flags);
+	size = restart_get_number(r);
+	if (size < 0 || size > r->size - r->offset)
+		fatalx("invalid restart input buffer");
+	ictx->input_len = size;
+	if (ictx->input_space < (size_t)size) {
+		ictx->input_space = size;
+		ictx->input_buf = xrealloc(ictx->input_buf, size);
+	}
+	restart_read(r, ictx->input_buf, size);
+	ictx->param_list_len = restart_get_number(r);
+	if (ictx->param_list_len > nitems(ictx->param_list))
+		fatalx("invalid restart parser parameters");
+	for (i = 0; i < ictx->param_list_len; i++) {
+		ictx->param_list[i].type = restart_get_number(r);
+		if (ictx->param_list[i].type == INPUT_STRING)
+			ictx->param_list[i].str = restart_get_string(r);
+		else
+			ictx->param_list[i].num = restart_get_number(r);
+	}
+	size = restart_get_number(r);
+	if (size < 0 || size > r->size - r->offset)
+		fatalx("invalid restart pending input");
+	if (size != 0) {
+		data = xmalloc(size);
+		restart_read(r, data, size);
+		if (evbuffer_add(ictx->since_ground, data, size) != 0)
+			fatalx("out of memory");
+		free(data);
+	}
+	if (ictx->state != &input_state_ground)
+		input_start_ground_timer(ictx);
 }
 
 /* Reset cell state to default. */

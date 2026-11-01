@@ -23,6 +23,7 @@
 #include <string.h>
 
 #include "tmux.h"
+#include "restart.h"
 
 /*
  * Block or wake a client on a named wait channel.
@@ -130,6 +131,47 @@ cmd_wait_for_add(const char *name)
 	log_debug("add wait channel %s", wc->name);
 
 	return (wc);
+}
+
+int
+restart_wait_ready(void)
+{
+	struct wait_channel *wc;
+
+	if (!TAILQ_EMPTY(&wait_event_items))
+		return (0);
+	RB_FOREACH(wc, wait_channels, &wait_channels) {
+		if (!TAILQ_EMPTY(&wc->waiters) || !TAILQ_EMPTY(&wc->lockers))
+			return (0);
+	}
+	return (1);
+}
+
+void
+restart_save_wait(struct restart *r)
+{
+	struct wait_channel *wc;
+
+	RB_FOREACH(wc, wait_channels, &wait_channels) {
+		restart_put_string(r, wc->name);
+		restart_put_number(r, wc->locked);
+		restart_put_number(r, wc->woken);
+	}
+	restart_put_string(r, NULL);
+}
+
+void
+restart_load_wait(struct restart *r)
+{
+	struct wait_channel *wc;
+	char *name;
+
+	while ((name = restart_get_string(r)) != NULL) {
+		wc = cmd_wait_for_add(name);
+		free(name);
+		wc->locked = restart_get_number(r);
+		wc->woken = restart_get_number(r);
+	}
 }
 
 static void

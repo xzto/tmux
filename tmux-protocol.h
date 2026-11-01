@@ -59,6 +59,7 @@ enum msgtype {
 	MSG_WAKEUP,
 	MSG_EXEC,
 	MSG_FLAGS,
+	MSG_RESTART, /* negotiated by CLIENT_CAN_RESTART */
 
 	MSG_READ_OPEN = 300,
 	MSG_READ,
@@ -76,6 +77,14 @@ enum msgtype {
  *
  * Don't forget to bump PROTOCOL_VERSION if any of these change!
  */
+struct msg_restart {
+	uint64_t flags;
+	u_int session;
+	char path[PATH_MAX];
+	char client_flags[256];
+	char features[256];
+}; /* executable descriptor passed with message */
+
 struct msg_command {
 	int	argc;
 }; /* followed by packed argv */
