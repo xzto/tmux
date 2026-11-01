@@ -23,6 +23,7 @@
 #include <string.h>
 
 #include "tmux.h"
+#include "restart.h"
 
 /*
  * OSC 8 hyperlinks, described at:
@@ -118,6 +119,51 @@ RB_PROTOTYPE_STATIC(hyperlinks_by_inner_tree, hyperlinks_uri, by_inner_entry,
     hyperlinks_by_inner_cmp);
 RB_GENERATE_STATIC(hyperlinks_by_inner_tree, hyperlinks_uri, by_inner_entry,
     hyperlinks_by_inner_cmp);
+
+void
+restart_save_hyperlinks(struct restart *r, struct hyperlinks *hl)
+{
+	struct hyperlinks_uri *hlu;
+
+	restart_put_number(r, hl == NULL ? 1 : hl->next_inner);
+	if (hl != NULL) {
+		RB_FOREACH(hlu, hyperlinks_by_inner_tree, &hl->by_inner) {
+			restart_put_number(r, hlu->inner);
+			restart_put_string(r, hlu->internal_id);
+			restart_put_string(r, hlu->external_id);
+			restart_put_string(r, hlu->uri);
+		}
+	}
+	restart_put_number(r, 0);
+	restart_put_number(r, hyperlinks_next_external_id);
+}
+
+struct hyperlinks *
+restart_load_hyperlinks(struct restart *r)
+{
+	struct hyperlinks *hl = hyperlinks_init();
+	struct hyperlinks_uri *hlu;
+	u_int inner;
+	long long next;
+
+	hl->next_inner = restart_get_number(r);
+	while ((inner = restart_get_number(r)) != 0) {
+		hlu = xcalloc(1, sizeof *hlu);
+		hlu->tree = hl;
+		hlu->inner = inner;
+		hlu->internal_id = restart_get_string(r);
+		hlu->external_id = restart_get_string(r);
+		hlu->uri = restart_get_string(r);
+		RB_INSERT(hyperlinks_by_inner_tree, &hl->by_inner, hlu);
+		RB_INSERT(hyperlinks_by_uri_tree, &hl->by_uri, hlu);
+		TAILQ_INSERT_TAIL(&global_hyperlinks, hlu, list_entry);
+		global_hyperlinks_count++;
+	}
+	next = restart_get_number(r);
+	if (hyperlinks_next_external_id < next)
+		hyperlinks_next_external_id = next;
+	return (hl);
+}
 
 /* Remove a hyperlink. */
 static void

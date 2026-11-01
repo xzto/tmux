@@ -28,6 +28,7 @@
 #include <unistd.h>
 
 #include "tmux.h"
+#include "restart.h"
 
 /*
  * Job scheduling. Run queued commands in the background and record their
@@ -416,6 +417,12 @@ job_kill_all(void)
 		if (job->pid != -1)
 			kill(job->pid, SIGTERM);
 	}
+}
+
+int
+restart_jobs_ready(void)
+{
+	return (LIST_EMPTY(&all_jobs));
 }
 
 /* Are any jobs still running? */

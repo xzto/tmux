@@ -29,6 +29,7 @@
 #include <unistd.h>
 
 #include "tmux.h"
+#include "restart.h"
 
 struct server_acl_entry {
 	id_t				 id;
@@ -55,6 +56,36 @@ server_acl_cmp(struct server_acl_entry *entry1,
 
 RB_HEAD(server_acl_entries, server_acl_entry) server_acl_entries;
 RB_GENERATE_STATIC(server_acl_entries, server_acl_entry, entry, server_acl_cmp);
+
+void
+restart_save_acl(struct restart *r)
+{
+	struct server_acl_entry *entry;
+
+	RB_FOREACH(entry, server_acl_entries, &server_acl_entries) {
+		restart_put_number(r, 1);
+		restart_put_number(r, entry->id);
+		restart_put_number(r, entry->flags);
+	}
+	restart_put_number(r, 0);
+}
+
+void
+restart_load_acl(struct restart *r)
+{
+	struct server_acl_entry *entry;
+
+	while ((entry = RB_ROOT(&server_acl_entries)) != NULL) {
+		RB_REMOVE(server_acl_entries, &server_acl_entries, entry);
+		free(entry);
+	}
+	while (restart_get_number(r)) {
+		entry = xcalloc(1, sizeof *entry);
+		entry->id = restart_get_number(r);
+		entry->flags = restart_get_number(r);
+		RB_INSERT(server_acl_entries, &server_acl_entries, entry);
+	}
+}
 
 static struct server_acl_entry *
 server_acl_entry_find(id_t id, int flags)

@@ -23,6 +23,7 @@
 #include <time.h>
 
 #include "tmux.h"
+#include "restart.h"
 
 /*
  * Set of paste buffers. Note that paste buffer data is not necessarily a C
@@ -67,6 +68,53 @@ paste_cmp_times(const struct paste_buffer *a, const struct paste_buffer *b)
 	if (a->order < b->order)
 		return (1);
 	return (0);
+}
+
+void
+restart_save_paste(struct restart *r)
+{
+	struct paste_buffer *pb;
+
+	restart_put_number(r, paste_next_index);
+	restart_put_number(r, paste_next_order);
+	restart_put_number(r, paste_num_automatic);
+	RB_FOREACH(pb, paste_name_tree, &paste_by_name) {
+		restart_put_string(r, pb->name);
+		restart_put_number(r, pb->size);
+		restart_write(r, pb->data, pb->size);
+		restart_put_number(r, pb->automatic);
+		restart_put_number(r, pb->created);
+		restart_put_number(r, pb->order);
+	}
+	restart_put_string(r, NULL);
+}
+
+void
+restart_load_paste(struct restart *r)
+{
+	struct paste_buffer *pb;
+	char *name;
+	int64_t size;
+
+	paste_next_index = restart_get_number(r);
+	paste_next_order = restart_get_number(r);
+	paste_num_automatic = restart_get_number(r);
+	while ((name = restart_get_string(r)) != NULL) {
+		pb = xcalloc(1, sizeof *pb);
+		pb->name = name;
+		size = restart_get_number(r);
+		if (size <= 0 || size > r->size - r->offset)
+			fatalx("invalid restart paste buffer");
+		pb->size = size;
+		pb->data = xmalloc(size);
+		restart_read(r, pb->data, size);
+		pb->automatic = restart_get_number(r);
+		pb->created = restart_get_number(r);
+		pb->order = restart_get_number(r);
+		if (RB_INSERT(paste_name_tree, &paste_by_name, pb) != NULL ||
+		    RB_INSERT(paste_time_tree, &paste_by_time, pb) != NULL)
+			fatalx("duplicate restart paste buffer");
+	}
 }
 
 /* Get paste buffer name. */

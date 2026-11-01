@@ -31,6 +31,7 @@
 #include <unistd.h>
 
 #include "tmux.h"
+#include "restart.h"
 
 static struct tmuxproc	*client_proc;
 static struct tmuxpeer	*client_peer;
@@ -55,6 +56,9 @@ static char		*client_exitmessage;
 static const char	*client_execshell;
 static const char	*client_execcmd;
 static int		 client_attached;
+static int		 client_restart_fd = -1;
+static struct msg_restart client_restart;
+static __dead void	 client_restart_exec(void);
 static struct client_files client_files = RB_INITIALIZER(&client_files);
 
 static __dead void	 client_exec(const char *,const char *);
@@ -276,7 +280,7 @@ client_main(struct event_base *base, int argc, char **argv, uint64_t flags,
 	proc_set_signals(client_proc, client_signal);
 
 	/* Save the flags. */
-	client_flags = flags|CLIENT_WRITE_ACK;
+	client_flags = flags|CLIENT_WRITE_ACK|CLIENT_CAN_RESTART;
 	log_debug("flags are %#llx", (unsigned long long)client_flags);
 
 	/* Initialize the client socket and start the server. */
@@ -317,7 +321,7 @@ client_main(struct event_base *base, int argc, char **argv, uint64_t flags,
 	 * "sendfd" is dropped later in client_dispatch_wait().
 	 */
 	if (pledge(
-	    "stdio rpath wpath cpath unix sendfd proc exec tty",
+	    "stdio rpath wpath cpath unix sendfd recvfd proc exec tty",
 	    NULL) != 0)
 		fatal("pledge failed");
 
@@ -399,6 +403,12 @@ client_main(struct event_base *base, int argc, char **argv, uint64_t flags,
 
 	/* Start main loop. */
 	proc_loop(client_proc, NULL);
+
+	if (client_restart_fd != -1) {
+		if (client_flags & CLIENT_CONTROLCONTROL)
+			tcsetattr(STDIN_FILENO, TCSANOW, &saved_tio);
+		client_restart_exec();
+	}
 
 	/* Run command if user requested exec, instead of exiting. */
 	if (client_exittype == MSG_EXEC) {
@@ -586,6 +596,23 @@ client_dispatch(struct imsg *imsg, __unused void *arg)
 		return;
 	}
 
+	if (imsg->hdr.type == MSG_RESTART) {
+		if (imsg->hdr.len - IMSG_HEADER_SIZE != sizeof client_restart)
+			fatalx("bad MSG_RESTART size");
+		memcpy(&client_restart, imsg->data, sizeof client_restart);
+		if (memchr(client_restart.path, '\0',
+		    sizeof client_restart.path) == NULL ||
+		    memchr(client_restart.client_flags, '\0',
+		    sizeof client_restart.client_flags) == NULL ||
+		    memchr(client_restart.features, '\0',
+		    sizeof client_restart.features) == NULL)
+			fatalx("bad MSG_RESTART strings");
+		client_restart_fd = imsg_get_fd(imsg);
+		if (client_restart_fd == -1)
+			fatalx("missing MSG_RESTART executable");
+		proc_exit(client_proc);
+		return;
+	}
 	if (client_attached)
 		client_dispatch_attached(imsg);
 	else
@@ -634,7 +661,7 @@ client_dispatch_wait(struct imsg *imsg)
 	 */
 	if (!pledge_applied) {
 		if (pledge(
-		    "stdio rpath wpath cpath unix proc exec tty",
+		    "stdio rpath wpath cpath unix recvfd proc exec tty",
 		    NULL) != 0)
 			fatal("pledge failed");
 		pledge_applied = 1;
@@ -717,6 +744,51 @@ client_dispatch_wait(struct imsg *imsg)
 		log_debug("unknown message type %u", imsg->hdr.type);
 		break;
 	}
+}
+
+static void
+client_restart_exec(void)
+{
+#ifdef HAVE_FEXECVE
+	const char *argv[16];
+	char target[32];
+	int argc = 0, fd;
+
+	xsnprintf(target, sizeof target, "$%u", client_restart.session);
+	argv[argc++] = client_restart.path;
+	argv[argc++] = "-N";
+	argv[argc++] = "-S";
+	argv[argc++] = (char *)socket_path;
+	if (client_restart.flags & CLIENT_CONTROLCONTROL)
+		argv[argc++] = "-CC";
+	else if (client_restart.flags & CLIENT_CONTROL)
+		argv[argc++] = "-C";
+	if (client_restart.flags & CLIENT_UTF8)
+		argv[argc++] = "-u";
+	if (client_restart.flags & CLIENT_LOGIN)
+		argv[argc++] = "-l";
+	argv[argc++] = "-T";
+	argv[argc++] = client_restart.features;
+	argv[argc++] = "attach-session";
+	argv[argc++] = "-E";
+	argv[argc++] = "-t";
+	argv[argc++] = target;
+	argv[argc++] = "-f";
+	argv[argc++] = client_restart.client_flags;
+	argv[argc] = NULL;
+	fd = client_restart_fd;
+	if (fd != 3) {
+		if (dup2(fd, 3) == -1)
+			fatal("restart dup2");
+	}
+	closefrom(4);
+	if (fcntl(3, F_SETFD, FD_CLOEXEC) == -1)
+		fatal("restart fcntl");
+	fexecve(3, (char *const *)argv, environ);
+	fatal("restart client exec");
+#else
+	fatalx("restart client requires fexecve");
+#endif
 }
 
 /* Dispatch imsgs in attached state (after MSG_READY). */

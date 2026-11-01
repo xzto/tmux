@@ -32,6 +32,7 @@ static char		**cfg_causes;
 static u_int		  cfg_ncauses;
 static struct cmdq_item	 *cfg_item;
 static int		  cfg_started;
+static int		  cfg_no_client;
 
 int                       cfg_quiet = 1;
 char                    **cfg_files;
@@ -99,7 +100,7 @@ start_cfg(void)
 	 * next client to identify is first in the list and ends up here. Block
 	 * it instead, but do not load the files again.
 	 */
-	cfg_client = c = TAILQ_FIRST(&clients);
+	cfg_client = c = cfg_no_client ? NULL : TAILQ_FIRST(&clients);
 	if (c != NULL) {
 		cfg_item = cmdq_get_callback(cfg_client_done, NULL);
 		cmdq_append(c, cfg_item);
@@ -114,6 +115,14 @@ start_cfg(void)
 		load_cfg(cfg_files[i], c, NULL, NULL, flags, NULL);
 
 	cmdq_append(NULL, cmdq_get_callback(cfg_done, NULL));
+}
+
+void
+start_cfg_no_client(void)
+{
+	/* Configuration may itself start the first connecting client. */
+	cfg_no_client = 1;
+	start_cfg();
 }
 
 int

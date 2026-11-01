@@ -26,6 +26,7 @@
 #include <unistd.h>
 
 #include "tmux.h"
+#include "restart.h"
 
 /* Command queue item type. */
 enum cmdq_type {
@@ -114,6 +115,40 @@ cmdq_get(struct client *c)
 		return (global_queue);
 	}
 	return (c->queue);
+}
+
+static int
+cmdq_restart_queue_ready(struct cmdq_list *queue, struct cmdq_item *current)
+{
+	struct cmdq_item *item;
+
+	TAILQ_FOREACH(item, &queue->list, entry) {
+		if (item == current)
+			continue;
+		if (item->type == CMDQ_CALLBACK &&
+		    strstr(item->name, "server_client_command_done") != NULL)
+			continue;
+		return (0);
+	}
+	return (1);
+}
+
+int
+restart_queue_ready(struct cmdq_item *current)
+{
+	struct client *c;
+
+	if (!cmdq_restart_queue_ready(cmdq_get(NULL), current))
+		return (0);
+	TAILQ_FOREACH(c, &clients, entry) {
+		if (!cmdq_restart_queue_ready(c->queue, current))
+			return (0);
+	}
+	TAILQ_FOREACH(c, &dead_clients, entry) {
+		if (!cmdq_restart_queue_ready(c->queue, current))
+			return (0);
+	}
+	return (1);
 }
 
 /* Create a queue. */

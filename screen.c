@@ -23,6 +23,7 @@
 #include <unistd.h>
 
 #include "tmux.h"
+#include "restart.h"
 
 /* Selected area in screen. */
 struct screen_sel {
@@ -51,6 +52,36 @@ TAILQ_HEAD(screen_titles, screen_title_entry);
 
 static void	screen_resize_y(struct screen *, u_int, int, u_int *);
 static void	screen_reflow(struct screen *, u_int, u_int *, u_int *, int);
+
+void
+restart_save_titles(struct restart *r, struct screen *s)
+{
+	struct screen_title_entry *title;
+
+	if (s->titles != NULL) {
+		TAILQ_FOREACH(title, s->titles, entry)
+			restart_put_string(r, title->text);
+	}
+	restart_put_string(r, NULL);
+}
+
+void
+restart_load_titles(struct restart *r, struct screen *s)
+{
+	struct screen_title_entry *title;
+	char *text;
+
+	while ((text = restart_get_string(r)) != NULL) {
+		if (s->titles == NULL) {
+			s->titles = xmalloc(sizeof *s->titles);
+			TAILQ_INIT(s->titles);
+		}
+		title = xcalloc(1, sizeof *title);
+		title->text = text;
+		TAILQ_INSERT_TAIL(s->titles, title, entry);
+		s->ntitles++;
+	}
+}
 
 /* Free titles stack. */
 static void

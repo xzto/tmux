@@ -32,6 +32,7 @@
 #include <unistd.h>
 
 #include "tmux.h"
+#include "restart.h"
 
 struct options	*global_options;	/* server options */
 struct options	*global_s_options;	/* session options */
@@ -438,9 +439,15 @@ main(int argc, char **argv)
 	char					*cause, **var;
 	const char				*s, *cwd;
 	int					 opt, keys, feat = 0, fflag = 0;
+	int					 restarting;
 	uint64_t				 flags = 0;
 	const struct options_table_entry	*oe;
 	u_int					 i;
+
+	restart_init(argv[0]);
+	restarting = restart_requested(argc, argv);
+	if (restarting)
+		argc = 1;
 
 	if (setlocale(LC_CTYPE, "en_US.UTF-8") == NULL &&
 	    setlocale(LC_CTYPE, "C.UTF-8") == NULL) {
@@ -619,6 +626,9 @@ main(int argc, char **argv)
 	}
 	socket_path = path;
 	free(label);
+
+	if (restarting)
+		restart_main(osdep_event_init());
 
 	/* Pass control to the client. */
 	exit(client_main(osdep_event_init(), argc, argv, flags, feat));

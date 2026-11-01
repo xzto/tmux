@@ -172,6 +172,7 @@ AC_SEARCH_LIBS(flock, bsd)
 # Check for functions that are replaced or omitted.
 AC_CHECK_FUNCS([ \
 	dirfd \
+	fexecve \
 	flock \
 	prctl \
 	proc_pidinfo \

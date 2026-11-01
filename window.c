@@ -33,6 +33,7 @@
 #include <unistd.h>
 
 #include "tmux.h"
+#include "restart.h"
 
 /*
  * Each window is attached to a number of panes, each of which is a pty. This
@@ -61,6 +62,42 @@ struct window_pane_tree all_window_panes;
 static u_int	next_window_pane_id;
 static u_int	next_window_id;
 static u_int	next_active_point;
+
+void
+window_restart_ids(struct restart *r, int writing)
+{
+	if (writing) {
+		restart_put_number(r, next_window_id);
+		restart_put_number(r, next_window_pane_id);
+		restart_put_number(r, next_active_point);
+	} else {
+		next_window_id = restart_get_number(r);
+		next_window_pane_id = restart_get_number(r);
+		next_active_point = restart_get_number(r);
+	}
+}
+
+void
+window_restart_id(struct window *w, u_int id)
+{
+	RB_REMOVE(windows, &windows, w);
+	w->id = id;
+	if (RB_INSERT(windows, &windows, w) != NULL)
+		fatalx("duplicate restart window");
+	if (next_window_id <= id)
+		next_window_id = id + 1;
+}
+
+void
+window_pane_restart_id(struct window_pane *wp, u_int id)
+{
+	RB_REMOVE(window_pane_tree, &all_window_panes, wp);
+	wp->id = id;
+	if (RB_INSERT(window_pane_tree, &all_window_panes, wp) != NULL)
+		fatalx("duplicate restart pane");
+	if (next_window_pane_id <= id)
+		next_window_pane_id = id + 1;
+}
 
 struct window_pane_input_data {
 	struct cmdq_item	*item;

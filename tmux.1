@@ -1602,6 +1602,48 @@ option.
 .D1 Pq alias: Ic rename
 Rename the session to
 .Ar new\-name .
+.It Ic restart\-server
+Reexecute the server and all attached clients using the executable at the
+logical path with which the server was started.
+Symbolic links in this path are followed again, so changing a link to point to
+an upgraded installation selects the new executable.
+The server and client process IDs, pane processes, sessions, windows, layouts,
+terminal contents and history, environment and paste buffers are retained.
+Options set on individual sessions, windows and panes are also retained.
+Server options, global session and window options, key bindings, global hooks
+and command aliases are reset to defaults, then the original configuration
+files (including those selected with
+.Fl f )
+are read again.
+Configuration commands that explicitly target a session, window or pane may
+change its retained options.
+A retained local option is not removed merely because its configuration line
+was deleted.
+Detached command clients finish rather than reattaching.
+.Pp
+Before changing the running server or any terminal, the new executable must
+successfully restore a private checkpoint in a separate process within five
+seconds.
+An incompatible or failing executable leaves the existing server and clients
+running.
+The probe does not execute configuration commands.
+After the handoff, configuration errors are reported as during normal startup,
+and attached clients reexecute after configuration loading completes.
+The tested executable is kept open across the handoff, including client
+reexecution, so a later symbolic link change cannot select a different binary.
+Both executables must support the same restart checkpoint format, and all
+attached clients must support restarting.
+This command requires
+.Xr fexecve 2 .
+.Pp
+Run this command on its own, not in a command sequence.
+Restarting is refused while configuration, jobs, waiting commands, client file
+transfers, prompts, pane modes, pipe commands, input requests, images
+or format monitors are active, or a client is suspended or exiting.
+Retry after these operations have finished.
+Control-client dimensions, including per-window size overrides, are retained.
+Client-local transient state, such as messages and the current key table, is
+reset when the clients reattach.
 .It Xo Ic server\-access
 .Op Fl adglrw
 .Op Ar user | group
