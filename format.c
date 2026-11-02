@@ -1389,6 +1389,7 @@ static int
 format_mouse_status_at(struct format_tree *ft, u_int *x, u_int *y)
 {
 	struct mouse_event	*m = &ft->m;
+	u_int			 statusx, statusw, sidey;
 
 	if (!m->valid)
 		return (-1);
@@ -1397,19 +1398,26 @@ format_mouse_status_at(struct format_tree *ft, u_int *x, u_int *y)
 
 	*x = m->x;
 	*y = m->y;
-	if (m->statusat == 0 && m->y < m->statuslines)
-		return (0);
-	if (m->statusat > 0 && m->y >= (u_int)m->statusat) {
-		*y -= m->statusat;
-		return (0);
+	if (m->statusat != -1 &&
+	    m->y >= (u_int)m->statusat &&
+	    m->y < m->statusat + m->statuslines) {
+		statusx = status_line_at_column(ft->c);
+		statusw = status_line_width(ft->c);
+		if (m->x >= statusx && m->x < statusx + statusw) {
+			*x -= statusx;
+			*y -= m->statusat;
+			return (0);
+		}
 	}
 	if (m->sideat == -1 ||
 	    m->x < (u_int)m->sideat ||
 	    m->x >= m->sideat + m->sidewidth)
 		return (-1);
+	sidey = status_side_at_line(ft->c);
+	if (m->y < sidey)
+		return (-1);
 	*x -= m->sideat;
-	if (m->statusat == 0)
-		*y -= m->statuslines;
+	*y -= sidey;
 	return (1);
 }
 

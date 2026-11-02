@@ -114,4 +114,21 @@ for side in left right; do
 	done
 done
 
+# With the side status full height, the status line starts after a left side
+# status line and the side status line covers the status rows.
+$TMUX set -g side-status left || exit 1
+$TMUX set -g side-status-full-height on || exit 1
+$TMUX set -g status on || exit 1
+$TMUX set -g status-position bottom || exit 1
+sleep 0.5
+click 16 20 'MouseDown1Status|window|0|1|0|inner|one'
+click 3 20 'MouseDown1SideStatusDefault||19|2|19|inner|zero'
+
+# On the right, the status line ends before the side status line.
+$TMUX set -g side-status right || exit 1
+$TMUX set -g status-position top || exit 1
+sleep 0.5
+click 3 1 'MouseDown1Status|window|0|2|0|inner|one'
+click 70 20 'MouseDown1SideStatusDefault||19|3|19|inner|zero'
+
 exit 0

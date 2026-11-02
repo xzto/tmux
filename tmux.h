@@ -1781,6 +1781,7 @@ struct session {
 	u_int		 statuslines;
 	int		 sidestatusat; /* -1 off, 0 left, 1 right */
 	u_int		 sidestatuswidth;
+	int		 sidestatusfullheight;
 
 	struct options	*options;
 
@@ -3572,8 +3573,11 @@ void	 status_update_cache(struct session *);
 u_int	 status_prompt_line_at(struct client *);
 int	 status_at_line(struct client *);
 u_int	 status_line_size(struct client *);
+u_int	 status_line_width(struct client *);
+int	 status_line_at_column(struct client *);
 u_int	 status_side_size(struct client *);
 int	 status_side_at_column(struct client *);
+u_int	 status_side_at_line(struct client *);
 u_int	 status_side_rows(struct client *);
 void	 status_side_init(struct client *);
 void	 status_side_free(struct client *);

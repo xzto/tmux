@@ -110,6 +110,8 @@ status_update_cache(struct session *s)
 		break;
 	}
 	s->sidestatuswidth = options_get_number(oo, "side-status-width");
+	s->sidestatusfullheight =
+	    options_get_number(oo, "side-status-full-height");
 }
 
 /* Get screen line of status line. -1 means off. */
@@ -151,6 +153,21 @@ status_side_size(struct client *c)
 	return (s->sidestatuswidth);
 }
 
+/* Get width of status line for client's session. */
+u_int
+status_line_width(struct client *c)
+{
+	struct session	*s = c->session;
+	u_int		 side;
+
+	if (s == NULL || !s->sidestatusfullheight)
+		return (c->tty.sx);
+	side = status_side_size(c);
+	if (side >= c->tty.sx)
+		return (0);
+	return (c->tty.sx - side);
+}
+
 /* Get starting column of side status line. -1 means off. */
 int
 status_side_at_column(struct client *c)
@@ -165,13 +182,44 @@ status_side_at_column(struct client *c)
 	return (c->tty.sx - width);
 }
 
+/* Get starting column of status line. */
+int
+status_line_at_column(struct client *c)
+{
+	struct session	*s = c->session;
+
+	if (s == NULL || !s->sidestatusfullheight)
+		return (0);
+	if (status_side_at_column(c) == 0)
+		return (status_side_size(c));
+	return (0);
+}
+
+/* Get starting row of side status line. */
+u_int
+status_side_at_line(struct client *c)
+{
+	struct session	*s = c->session;
+
+	if (s == NULL || s->sidestatusfullheight)
+		return (0);
+	if (status_at_line(c) == 0)
+		return (status_line_size(c));
+	return (0);
+}
+
 /* Get number of rows of side status line for client. */
 u_int
 status_side_rows(struct client *c)
 {
-	u_int	lines = status_line_size(c);
+	struct session	*s = c->session;
+	u_int		 lines = status_line_size(c);
 
-	if (status_side_size(c) == 0 || c->tty.sy <= lines)
+	if (status_side_size(c) == 0)
+		return (0);
+	if (s != NULL && s->sidestatusfullheight)
+		return (c->tty.sy);
+	if (c->tty.sy <= lines)
 		return (0);
 	return (c->tty.sy - lines);
 }
@@ -211,7 +259,8 @@ status_push_screen(struct client *c)
 
 	if (sl->active == &sl->screen) {
 		sl->active = xmalloc(sizeof *sl->active);
-		screen_init(sl->active, c->tty.sx, status_line_size(c), 0);
+		screen_init(sl->active, status_line_width(c),
+		    status_line_size(c), 0);
 	}
 	sl->references++;
 }
@@ -274,7 +323,7 @@ status_redraw(struct client *c)
 	struct session			*s = c->session;
 	struct screen_write_ctx		 ctx;
 	struct grid_cell		 gc;
-	u_int				 lines, i, n, width = c->tty.sx;
+	u_int				 lines, i, n, width = status_line_width(c);
 	int				 flags, force = 0, changed = 0, fg, bg;
 	struct options_entry		*o;
 	union options_value		*ov;
@@ -617,29 +666,31 @@ status_message_area(struct client *c, u_int *area_x, u_int *area_w)
 {
 	struct session		*s = c->session;
 	struct style		*sy;
-	u_int			 w;
+	u_int			 width, w;
+
+	width = status_line_width(c);
 
 	/* Get width from message-style's width directive. */
 	sy = options_string_to_style(s->options, "message-style", NULL);
 	if (sy != NULL && sy->width >= 0) {
 		if (sy->width_percentage)
-			w = (c->tty.sx * (u_int)sy->width) / 100;
+			w = (width * (u_int)sy->width) / 100;
 		else
 			w = (u_int)sy->width;
 	} else
-		w = c->tty.sx;
-	if (w == 0 || w > c->tty.sx)
-		w = c->tty.sx;
+		w = width;
+	if (w == 0 || w > width)
+		w = width;
 
 	/* Get horizontal position from message-style's align directive. */
 	if (sy != NULL) {
 		switch (sy->align) {
 		case STYLE_ALIGN_CENTRE:
 		case STYLE_ALIGN_ABSOLUTE_CENTRE:
-			*area_x = (c->tty.sx - w) / 2;
+			*area_x = (width - w) / 2;
 			break;
 		case STYLE_ALIGN_RIGHT:
-			*area_x = c->tty.sx - w;
+			*area_x = width - w;
 			break;
 		default:
 			*area_x = 0;
@@ -668,7 +719,7 @@ status_message_redraw(struct client *c)
 	struct screen_write_ctx	 ctx;
 	struct session		*s = c->session;
 	struct screen		 old_screen;
-	u_int			 lines, messageline;
+	u_int			 lines, messageline, width;
 	u_int			 ax, aw;
 	struct grid_cell	 gc;
 	struct format_tree	*ft;
@@ -682,7 +733,8 @@ status_message_redraw(struct client *c)
 	lines = status_line_size(c);
 	if (lines <= 1)
 		lines = 1;
-	screen_init(sl->active, c->tty.sx, lines, 0);
+	width = status_line_width(c);
+	screen_init(sl->active, width, lines, 0);
 
 	messageline = status_prompt_line_at(c);
 	if (messageline > lines - 1)
@@ -711,7 +763,7 @@ status_message_redraw(struct client *c)
 	format_free(ft);
 
 	screen_write_start(&ctx, sl->active);
-	screen_write_fast_copy(&ctx, &sl->screen, 0, 0, c->tty.sx, lines);
+	screen_write_fast_copy(&ctx, &sl->screen, 0, 0, width, lines);
 	screen_write_cursormove(&ctx, ax, messageline, 0);
 	format_draw(&ctx, &gc, aw, expanded, NULL, 0);
 	screen_write_stop(&ctx);
@@ -861,7 +913,7 @@ status_prompt_redraw(struct client *c)
 	struct screen_write_ctx	 ctx;
 	struct screen		 old_screen;
 	struct prompt_draw_data	 pdd;
-	u_int			 lines, ax, aw, promptline;
+	u_int			 lines, ax, aw, promptline, width;
 
 	if (c->tty.sx == 0 || c->tty.sy == 0)
 		return (0);
@@ -870,7 +922,8 @@ status_prompt_redraw(struct client *c)
 	lines = status_line_size(c);
 	if (lines <= 1)
 		lines = 1;
-	screen_init(sl->active, c->tty.sx, lines, 0);
+	width = status_line_width(c);
+	screen_init(sl->active, width, lines, 0);
 
 	promptline = status_prompt_line_at(c);
 	if (promptline > lines - 1)
@@ -879,7 +932,7 @@ status_prompt_redraw(struct client *c)
 	status_message_area(c, &ax, &aw);
 
 	screen_write_start(&ctx, sl->active);
-	screen_write_fast_copy(&ctx, &sl->screen, 0, 0, c->tty.sx, lines);
+	screen_write_fast_copy(&ctx, &sl->screen, 0, 0, width, lines);
 
 	pdd.ctx = &ctx;
 	pdd.area_x = ax;
@@ -903,7 +956,7 @@ void
 status_prompt_cursor(struct client *c, u_int *cx, u_int *cy)
 {
 	*cy = status_prompt_screen_line(c);
-	*cx = c->status.prompt_cx;
+	*cx = status_line_at_column(c) + c->status.prompt_cx;
 }
 
 /* Handle keys in prompt. */
@@ -911,16 +964,18 @@ enum prompt_key_result
 status_prompt_key(struct client *c, key_code key, struct mouse_event *m)
 {
 	enum prompt_key_result	result;
-	u_int			ax, aw;
+	u_int			ax, aw, x;
 	int			redraw = 0;
 
 	if (KEYC_IS_MOUSE(key)) {
 		if (m == NULL || MOUSE_BUTTONS(m->b) != MOUSE_BUTTON_1 ||
 		    MOUSE_DRAG(m->b) || MOUSE_RELEASE(m->b) ||
-		    m->y != status_prompt_screen_line(c))
+		    m->y != status_prompt_screen_line(c) ||
+		    m->x < (u_int)status_line_at_column(c))
 			return (PROMPT_KEY_NOT_HANDLED);
 		status_message_area(c, &ax, &aw);
-		result = prompt_mouse(c->prompt, m->x, ax, aw, &redraw);
+		x = m->x - status_line_at_column(c);
+		result = prompt_mouse(c->prompt, x, ax, aw, &redraw);
 	} else
 		result = prompt_key(c->prompt, key, &redraw);
 	if (redraw && c->prompt != NULL)

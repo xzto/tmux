@@ -80,4 +80,22 @@ want="$(printf '%13s' '')│PROMPTX"
 got=$(tail -n 1 "$CAPTURE")
 [ "$got" = "$want" ] || fail "bottom row is '$got', expected '$want'"
 
+# With the side status full height, the prompt uses the status line beside it.
+# The prompt was opened while the status line was off, so cancel it and open
+# it again to redraw it with the new geometry.
+$TMUX set -g status on || exit 1
+$TMUX set -g side-status-full-height on || exit 1
+sleep 1
+$TMUX2 send-keys -t outer:0.0 Escape || exit 1
+sleep 1
+$TMUX command-prompt -b -P -t "$CLIENT" -p PROMPTX 'display -p %%' ||
+    exit 1
+wait_outer_has PROMPTX
+sleep 1
+$TMUX2 capture-pane -p -t outer:0.0 >"$CAPTURE" || exit 1
+grep -q PROMPTX "$CAPTURE" ||
+    fail "full height: prompt not redrawn after reopening"
+$TMUX has-session 2>/dev/null ||
+    fail "server exited when status was turned on"
+
 exit 0

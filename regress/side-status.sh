@@ -74,6 +74,17 @@ compare side-right
 $TMUX2 set -g status on
 compare side-right-status
 
+# With the side status full height, the status line is drawn beside it.
+$TMUX2 set -g side-status-full-height on
+compare side-right-full-height
+$TMUX2 set -g side-status left
+compare side-left-full-height
+$TMUX2 set -g status-position top
+compare side-left-top-full-height
+$TMUX2 set -g status-position bottom
+$TMUX2 set -g side-status-full-height off
+$TMUX2 set -g side-status right
+
 $TMUX2 set -g side-status-width 12
 compare side-right-narrow
 
