@@ -355,7 +355,8 @@ window_client_draw(void *modedata, void *itemdata,
 		screen_write_cursormove(ctx, cx, cy, 0);
 	else
 		screen_write_cursormove(ctx, cx, cy + sy - lines, 0);
-	screen_write_fast_copy(ctx, &c->status.screen, 0, 0, sx, lines);
+	screen_write_fast_copy(ctx, &c->status.screen, 0, 0,
+	    status_line_width(c), lines);
 }
 
 static void

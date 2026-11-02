@@ -1100,6 +1100,14 @@ const struct options_table_entry options_table[] = {
 	  .text = "Format for the side status line."
 	},
 
+	{ .name = "side-status-full-height",
+	  .type = OPTIONS_TABLE_FLAG,
+	  .scope = OPTIONS_TABLE_SESSION,
+	  .default_num = 0,
+	  .text = "Whether the side status line spans the full height of the "
+		  "terminal, leaving the status line the remaining width."
+	},
+
 	{ .name = "side-status-style",
 	  .type = OPTIONS_TABLE_STRING,
 	  .scope = OPTIONS_TABLE_SESSION,

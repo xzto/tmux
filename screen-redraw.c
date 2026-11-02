@@ -1945,8 +1945,8 @@ redraw_draw(struct client *c, struct window_pane *wp, int flags)
 	struct screen		*sl;
 	struct redraw_scene	*scene;
 	struct window_pane	*loop;
-	u_int			 width, i, y, lines, side_width;
-	int			 side_x;
+	u_int			 width, i, y, lines, side_width, status_width;
+	int			 side_x, status_x;
 	struct redraw_span	*first;
 	int			 redraw;
 
@@ -2071,10 +2071,7 @@ redraw_draw(struct client *c, struct window_pane *wp, int flags)
 		side_width = status_side_size(c);
 		side_x = status_side_at_column(c);
 		if (side_width != 0 && side_x != -1) {
-			if (dctx.flags & REDRAW_STATUS_TOP)
-				y = dctx.status_lines;
-			else
-				y = 0;
+			y = status_side_at_line(c);
 			for (i = 0; i < status_side_rows(c); i++) {
 				tty_draw_line(tty, &c->side_status.screen, 0, i,
 				    side_width, side_x, y + i, NULL);
@@ -2091,8 +2088,12 @@ redraw_draw(struct client *c, struct window_pane *wp, int flags)
 		else
 			y = c->tty.sy - lines;
 		sl = c->status.active;
-		for (i = 0; i < lines; i++)
-			tty_draw_line(tty, sl, 0, i, tty->sx, 0, y + i, NULL);
+		status_width = status_line_width(c);
+		status_x = status_line_at_column(c);
+		for (i = 0; i < lines; i++) {
+			tty_draw_line(tty, sl, 0, i, status_width, status_x,
+			    y + i, NULL);
+		}
 	}
 
 #ifdef ENABLE_IMAGES

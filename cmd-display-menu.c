@@ -169,7 +169,7 @@ cmd_display_menu_set_status_pos(struct client *tc, struct cmdq_item *item,
 	side = status_side_at_column(tc);
 	if (side == -1)
 		return;
-	sidey = (position == 0 ? lines : 0);
+	sidey = status_side_at_line(tc);
 	if (m->valid && m->x >= (u_int)side &&
 	    m->x < side + status_side_size(tc) &&
 	    m->y >= sidey && m->y - sidey < status_side_rows(tc)) {

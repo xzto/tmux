@@ -800,7 +800,7 @@ server_client_check_mouse_status(struct client *c, struct mouse_event *m,
 	struct window_pane		*fwp;
 	struct session			*s = c->session, *fs;
 	struct style_range		*sr;
-	u_int				 n, sidey, separator;
+	u_int				 n, sidey, separator, statusx, statusw;
 	int				 side = 0, mflag = tty->mouse_drag_flag;
 	enum key_code_mouse_location	 mloc = tty->mouse_drag_location;
 
@@ -816,20 +816,20 @@ server_client_check_mouse_status(struct client *c, struct mouse_event *m,
 		return (0);
 	}
 
+	statusx = status_line_at_column(c);
+	statusw = status_line_width(c);
 	if (m->statusat != -1 &&
 	    y >= (u_int)m->statusat &&
-	    y < m->statusat + m->statuslines) {
-		sr = status_get_range(c, x, y - m->statusat);
+	    y < m->statusat + m->statuslines &&
+	    x >= statusx && x < statusx + statusw) {
+		sr = status_get_range(c, x - statusx, y - m->statusat);
 	} else {
 		if (m->sideat == -1 ||
 		    x < (u_int)m->sideat ||
 		    x >= m->sideat + m->sidewidth) {
 			goto not_on_status;
 		}
-		if (m->statusat == 0)
-			sidey = m->statuslines;
-		else
-			sidey = 0;
+		sidey = status_side_at_line(c);
 		if (y < sidey || y - sidey >= status_side_rows(c))
 			goto not_on_status;
 		separator = m->sideat;
